@@ -793,3 +793,192 @@
 // }
 
 // --------------------------------------------------------------------------------------------------------------------
+
+
+
+// Завдання 1: Звичайна функція (Function Declaration)
+// Створіть функцію з назвою isEven, яка приймає один параметр number. Функція повинна повертати true, якщо число парне, і false, якщо непарне.
+
+// function isEven(number) {
+//     return number % 2 === 0;
+// }
+
+// console.log(isEven(4));
+
+
+// // рішення 2
+
+// const isEven2 = number => number % 2 === 0;
+// console.log(isEven2(7));
+
+
+// Завдання 2: Вираз функції (Function Expression)
+// Створіть функцію як вираз, що називається doubleNumber. Вона повинна приймати один параметр num та повертати його значення, помножене на 2.
+
+// const doubleNumber = function(num) {
+//     return num * 2;
+// }
+// console.log(doubleNumber(15));
+
+
+// // рішення 2
+// const doubleNumber2 = num => num * 2;
+// console.log(doubleNumber2(6));
+
+
+// Завдання 3: Стрілкова функція (Arrow Function)
+// Перепишіть функцію з попереднього завдання як стрілкову. Назвіть її tripleNumber. Вона має приймати num та повертати його значення, помножене на 3.
+
+// const tripleNumber = num => num * 3;
+// console.log(tripleNumber(3));
+
+
+// Завдання 4: Стрілкова функція з коротким записом
+// Створіть стрілкову функцію getSquare, яка приймає один параметр x. Використайте короткий запис (без фігурних дужок та return), щоб функція повертала квадрат числа x.
+
+// const getSquare = x => x * x;
+// console.log(getSquare(5));
+
+// Завдання 5: Значення за замовчуванням
+// Створіть функцію greeting, яка приймає два параметри: name та message. Встановіть для message значення за замовчуванням 'Привіт!'. Функція повинна повертати рядок, що містить ім'я та повідомлення.
+
+// const greeting = function (name, message = 'Привіт') {
+//     return `${message}, ${name}!`
+// }
+// console.log(greeting('Анна'));
+
+
+// Завдання 6: Значення за замовчуванням та стрілкова функція
+// Створіть стрілкову функцію power, яка приймає base та exponent. Встановіть для exponent значення за замовчуванням 2. Функція має повертати base в степені exponent.
+
+// const power = (base, exponent = 2) => base ** exponent;
+// console.log(power(3, 3));
+
+
+// Завдання 7: Вираз як значення за замовчуванням
+// Створіть функцію logTime, яка приймає параметр time. Встановіть для time значення за замовчуванням, яке є результатом виклику функції getFormattedTime(). Функція logTime повинна просто виводити time в консоль.
+
+// Ось допоміжна функція getFormattedTime():
+
+// JavaScript
+
+// function getFormattedTime() {
+//   const now = new Date();
+//   return `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+// }
+
+
+// const logTime = (time = getFormattedTime()) => time
+// console.log(logTime());
+
+
+// Завдання 8: Функція, що повертає іншу функцію
+// Створіть функцію createMultiplier, яка приймає один параметр factor. Ця функція повинна повертати нову стрілкову функцію, яка, у свою чергу, приймає параметр number та повертає number помножений на factor.
+
+// function createMultiplier(factor) {
+//     const newNumber = number => number * factor;
+//     return newNumber;
+// }
+// console.log(createMultiplier(10) (2));  // перший арг піде в зовішню функцію, 2 арг піде у внутрішню функцію
+
+
+// додаткові варіанти з поясненням :
+// /**
+//  * Ця функція є "фабрикою" для інших функцій.
+//  * Вона приймає "factor" і повертає нову функцію, яка буде множити
+//  * будь-яке число на цей "factor".
+//  *
+//  * @param {number} factor - число, на яке будемо множити.
+//  * @returns {function(number): number} - повертає нову функцію.
+//  */
+// function createMultiplier(factor) {
+//     // Внутрішня функція, яка має доступ до "factor" з зовнішньої області видимості.
+//     const newNumber = number => number * factor;
+    
+//     // Ми повертаємо саму функцію, а не результат її виконання.
+//     return newNumber;
+// }
+
+// // Крок 1: Викликаємо зовнішню функцію `createMultiplier` і передаємо їй аргумент 5.
+// // Вона повертає нову функцію, яка "запам'ятала" (через замикання)
+// // що її "factor" дорівнює 5. Ми зберігаємо цю нову функцію у змінній.
+// const multiplyBy5 = createMultiplier(5);
+
+// // Крок 2: Тепер змінна `multiplyBy5` містить нашу "нову" функцію.
+// // Ми можемо викликати її з іншим аргументом, наприклад, 10.
+// // Вона виконає `10 * 5`.
+// const result1 = multiplyBy5(10); // 50
+// console.log(result1); // Виведе: 50
+
+// // Крок 3: Ми можемо створити й інші множники з тим же кодом!
+// // Наприклад, множник на 3.
+// const multiplyBy3 = createMultiplier(3);
+// const result2 = multiplyBy3(20); // 60
+// console.log(result2); // Виведе: 60
+
+// // Або ж можна зробити все в одному рядку (хоча це менш читабельно):
+// // Спочатку викликаємо `createMultiplier(10)`
+// // Отримаємо функцію, і одразу ж викликаємо її з аргументом 2.
+// console.log(createMultiplier(10)(2)); // Виведе: 20
+
+
+
+
+
+// Завдання 9: Комбінація функцій
+// Створіть дві функції: add(a, b) та subtract(a, b). Кожна з них повинна повертати відповідний результат. Потім створіть функцію calculate(a, b, operation), яка приймає два числа та функцію-операцію як третій параметр. Викличте її для додавання та віднімання.
+
+
+
+// function add(a, b) {
+//     return a + b;
+// }
+
+// function substract(a, b) {
+//     return a - b;
+// }
+
+// /**
+//  * Performs the appropriate mathematical operation (+ or -)
+//  * depending on the value of the operator parameter by calling
+//  * the helper functions add or substract.
+//  * @param {number} a - The first operand.
+//  * @param {number} b - The second operand.
+//  * @param {string} operator - The mathematical symbol for the operation ('+' or '-').
+//  * @returns {number|string} The result of the operation or an error message.
+//  */
+
+// function calculate(a, b, operator) {
+
+//     if (operator === '+') {
+//         return add(a, b);
+//     } else if (operator === '-') {
+//         return substract(a, b)
+//     } else {
+//         return `Unexpected operator`
+//     }
+
+// }
+// console.log(calculate(10, 5, '-'));
+
+
+// Завдання 10: Функція з динамічною кількістю аргументів
+// Створіть функцію sumAll, яка приймає необмежену кількість числових аргументів за допомогою оператора rest (...args). Функція повинна повертати суму всіх переданих чисел.
+
+// /**
+//  * @function sumAll
+//  * Sums the unlimited quantity of arguments passed to a function
+//  * @param  {...number} args - collection of numbers to be added
+//  * @returns {number} Total sum of all arguments
+//  */
+
+
+// const sumAll = function (...args) {
+//     let sum = 0;
+//     for (const num of args) {
+//         sum += num;
+//     }
+//     return sum;
+// }
+
+// console.log(sumAll(2, 2, 2, 2));
