@@ -982,3 +982,107 @@
 // }
 
 // console.log(sumAll(2, 2, 2, 2));
+
+// -------------------------------------------------------------------------------------------------------------------------------------
+
+// /**
+//  * Ваше завдання: Додати повний JSDoc-коментар для цієї функції.
+//  * Опишіть, що вона робить, які параметри приймає та що повертає.
+//  */
+
+// /**
+//  * Function calculates the amount of discount
+//  * @param {number} price - the clear price of product.
+//  * @param {number} discountPercentage - the discount percentage
+//  * @returns {number|string} - discounted price or error message
+//  */
+// function calculateDiscountedPrice(price, discountPercentage) {
+//   // Розраховує ціну з урахуванням знижки
+//   if (discountPercentage < 0 || discountPercentage > 100) {
+//     return 'Invalid discount percentage';
+//   }
+//   const discountAmount = (price * discountPercentage) / 100;
+//   return price - discountAmount;
+// }
+
+// // ---
+
+// /**
+//  * Ваше завдання: Документувати цей метод.
+//  * Вкажіть, що це метод класу, та опишіть, що він повертає.
+//  */
+
+
+// class User {
+//   constructor(firstName, lastName) {
+//     this.firstName = firstName;
+//     this.lastName = lastName;
+//   }
+
+//   /**
+//    * @method getFullName
+//    * @returns {string} full user name composed of two properties
+//    */
+//   getFullName() {
+//     // Повертає повне ім'я користувача (ім'я та прізвище)
+//     return `${this.firstName} ${this.lastName}`;
+//   }
+// }
+
+// // ---
+
+// /**
+//  * Ваше завдання: Додати JSDoc до асинхронної функції.
+//  * Опишіть її призначення, що вона повертає (проміс), та які можуть виникнути помилки.
+//  */
+
+// /**
+//  * Fetches user data from a remote source.
+//  * @async
+//  * @param {string} userId - The unique identifier of the user.
+//  * @returns {Promise<object>} - A Promise that resolves with a user data object on success.
+//  * @throws {Error} If the request fails or data is unavailable.
+//  */
+// async function fetchUserData(userId) {
+//   const isAvailable = Math.random() > 0.5;
+//   if (!isAvailable) {
+//     throw new Error('User data is currently unavailable.');
+//   }
+
+//   // Імітує запит до API та повертає дані користувача
+//   return {
+//     id: userId,
+//     name: 'Jane Doe',
+//     email: 'jane.doe@example.com'
+//   };
+// }
+
+// // ---
+
+// /**
+//  * Ваше завдання: Документувати цю функцію та її параметр-коллбек.
+//  * Поясніть, що `callback` очікує два аргументи: `item` та `index`.
+//  */
+
+// /**
+//  * This callback is invoked for each item in an array.
+//  * @callback ItemProcessor
+//  * @param {*} item - The current array item.
+//  * @param {number} index - The index of the current item.
+//  * @param {Array<*>} array - The original array.
+//  */
+
+// /**
+//  * Iterates over an array and applies a callback function to each element.
+//  * @param {Array<*>} arr - The array to be processed.
+//  * @param {ItemProcessor} callback - The function to be called for each item.
+//  */
+// function processArrayWithCallback(arr, callback) {
+//   // Проходить по масиву та для кожного елемента викликає коллбек-функцію
+//   for (let i = 0; i < arr.length; i++) {
+//     callback(arr[i], i);
+//   }
+// }
+
+
+// --------------------------------------------------------------------------------------------------------------------------
