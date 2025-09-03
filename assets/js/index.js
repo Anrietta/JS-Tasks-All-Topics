@@ -1775,5 +1775,331 @@
 // student1.sayHello();
 
 
+// ------------------------------------------------------------------------------------------------------------------------------------------
 
+// Задача 1: Ініціалізація та доступ
+// Створіть масив під назвою фрукти, який містить три рядки: "яблуко", "банан" та "апельсин".
+// Виведіть у консоль другий елемент масиву (банан).
+// Замініть перший елемент (яблуко) на "ківі".
+// Виведіть у консоль весь масив, щоб переконатися у змінах.
+
+// const fruits = ['apple', 'banana', 'orange'];
+// console.log(fruits[1]);
+// fruits[0] = 'kiwi';
+// console.log(fruits);
+
+
+// Задача 2: Довжина масиву та останній елемент
+// Створіть масив числа з п'яти довільних цілих чисел.
+// Виведіть у консоль загальну кількість елементів у масиві.
+// Використовуючи властивість length, виведіть у консоль останній елемент масиву.
+
+// const numbers = [1, 15, 108, 24, 66];
+// console.log(numbers.length);
+// console.log(numbers[numbers.length - 1]);
+
+
+
+// Задача 3: Простий перебір за допомогою for
+// Створіть масив кольори з трьома рядками: "червоний", "зелений", "синій".
+// Використовуючи цикл for, переберіть масив і виведіть кожен елемент у консоль.
+
+// const colors = ['red', 'green', 'blue'];
+
+// // for (let color = 0; color <= colors.length - 1; color++) {
+// //     console.log(colors[color]);
+// // }
+
+// for (const color of colors) {
+//     console.log(color);
+// }
+
+
+// Задача 4: Перебір за допомогою for...of
+// Створіть масив тварини з кількома назвами тварин.
+// Використовуючи цикл for...of, переберіть масив і виведіть у консоль кожну назву тварини.
+
+// const animals = ['dog', 'cat', 'mouse', 'parrot'];
+
+// for (const animal of animals) {
+//     console.log(animal);
+// }
+
+
+// Задача 5: Обчислення суми елементів
+// Створіть масив ціни з довільними числами.
+// Використовуючи цикл for, обчисліть суму всіх елементів масиву.
+// Збережіть суму в змінну загальнаСума.
+// Виведіть у консоль загальнаСума разом із пояснювальним текстом, наприклад: "Загальна сума цін: <сума>".
+
+// const prices = [105, 215, 98, 32];
+// let totalSum = 0;
+
+// for (const price of prices) {
+
+//     totalSum += price;
+
+// }
+// console.log(`Total sum of prices is ${totalSum}`);
+
+
+
+// Завдання 6
+// Напишіть код, який об'єднає два масиви в один і виведе його у консоль.
+// Масив 1: ['apple', 'banana', 'orange']
+// Масив 2: ['grape', 'kiwi']
+
+
+// const fruits1 = ['apple', 'banana', 'orange'];
+// const fruits2 = ['grape', 'kiwi'];
+
+// const fruits = [...fruits1, ... fruits2];
+
+// fruits1[0] = 'avocado';
+// console.log(fruits1);
+// console.log(fruits);
+
+
+
+// Завдання 7
+// Напишіть код, який перевірить, чи є число парним, чи непарним.
+// Якщо число парне — виведіть у консоль повідомлення "Число парне.", якщо непарне — "Число непарне.".
+// Число для перевірки: 42
+
+// const number = 42;
+
+// if (number % 2 === 0) {
+//     console.log(`${number} is an even number`);
+// } else {
+//     console.log(`${number} is an odd number`);
+// }
+
+
+// Завдання 8
+// Напишіть код, який знайде найдовше слово у масиві.
+// Масив для перевірки: ['apple', 'banana', 'kiwi', 'pineapple', 'grape'];
+
+
+// const fruits = ['apple', 'banana', 'kiwi', 'pineapple', 'grape'];
+// let longestName = '';
+
+// for (const fruit of fruits) {
+
+//     if (fruit.length > longestName.length) {
+//         longestName = fruit;
+//     }
+// }
+
+// console.log(longestName);
+
+
+
+
+// Завдання 9
+// Створіть код, який перетворить кожну літеру кожного слова в масиві на велику.
+// Масив для перетворення: ['hello', 'world', 'in', 'javascript']
+// Очікуваний результат: ['HELLO', 'WORLD', 'IN', 'JAVASCRIPT']
+
+
+// const words = ['hello', 'world', 'in', 'javascript'];
+// const wordsUpperCase = [];
+
+// for (const word of words) {
+//     // тут я в підкладаю слова в новий масив за тим самим індексом за яким вони знаходились в старому масиві
+//     // (отримуючи індекс поточного елемента під час ітерації по старому масиву)
+//     wordsUpperCase[words.indexOf(word)] = word.toUpperCase(); 
+
+// }
+
+// console.log(wordsUpperCase);
+
+
+
+// Завдання 10
+// Створіть код, який видалить перший та останній елементи з масиву.
+// Масив для обробки: ['apple', 'banana', 'kiwi', 'pineapple', 'grape']
+// Очікуваний результат: ['banana', 'kiwi', 'pineapple']
+
+// // варіант 1
+// let fruits = ['apple', 'banana', 'kiwi', 'pineapple', 'grape'].slice(1, -1);
+// console.log(fruits);
+
+
+// // варіант 2
+// const fruits = ['apple', 'banana', 'kiwi', 'pineapple', 'grape'];
+// const newFruits = [];
+
+// // Проходимося по масиву, починаючи з другого елемента (індекс 1)
+// // і зупиняємося перед останнім елементом (fruits.length - 1)
+// for (let i = 1; i < fruits.length - 1; i++) {
+//     newFruits.push(fruits[i]);
+// }
+
+// console.log(newFruits);
+
+
+// варіант 3
+// const fruits = ['apple', 'banana', 'kiwi', 'pineapple', 'grape'];
+
+// // Розраховуємо довжину нового масиву
+// const newLength = fruits.length - 2;
+// // Створюємо новий порожній масив
+// const newFruits = new Array(newLength);
+
+// // Проходимося по елементах від індексу 1 до передостаннього
+// for (let i = 0; i < newLength; i++) {
+//     // Присвоюємо елементи з оригінального масиву
+//     // (починаючи з індексу 1) до нового масиву
+//     newFruits[i] = fruits[i + 1];
+// }
+
+// console.log(newFruits);
+
+
+
+
+// Завдання 11
+// Створіть код, який додасть новий елемент banana на початок масиву та новий елемент grape в кінець масиву.
+// Масив для обробки: ['apple', 'kiwi', 'pineapple']
+// Очікуваний результат: ['banana', 'apple', 'kiwi', 'pineapple', 'grape']
+
+// 1 варіант
+// const fruits = ['apple', 'kiwi', 'pineapple'];
+// fruits.unshift('banana');
+// fruits.push('grape');
+
+// console.log(fruits);
+
+// 2 варіант
+// const fruits = ['apple', 'kiwi', 'pineapple'];
+// const fruits2 = ['banana', ...fruits, 'grape'];
+// console.log(fruits2);
+
+
+// 3 варіант
+// const fruits = ['apple', 'kiwi', 'pineapple'];
+// const fruitsAddition = ['banana', 'grape'];
+// const fruits2 = [fruitsAddition[0], ...fruits, fruitsAddition[1]];
+// console.log(fruits2);
+
+
+
+
+// 1. Збільшення віку
+// Створіть поверхневу копію масиву users. Потім за допомогою циклу for...of або методу forEach збільшіть значення age на 1 
+// для кожного об'єкта в новій копії. Виведіть обидва масиви в консоль, щоб переконатися, що оригінальний масив залишився без змін.
+
+// const users = [
+//   { name: 'Alice', age: 25 },
+//   { name: 'Bob', age: 30 },
+//   { name: 'Charlie', age: 35 }
+// ];
+
+// const usersCopy = [...users];
+// for (user of usersCopy) {
+//     user.age = user.age + 1;
+// }
+
+// console.log(usersCopy);
+// console.log(users);  // зміняться одидва масиви, тому що я зробила лише поверхневу копію, а зміни вносила нв шар глибше
+
+// 2. Подвоєння чисел
+// Створіть поверхневу копію масиву numbers. Переберіть елементи в новій копії та за допомогою методу map створіть новий масив,
+//  в якому кожне число буде помножене на 2. Виведіть обидва масиви, щоб переконатися, що оригінал не змінився.
+
+
+// const numbers = [1, 2, 3, 4, 5];
+// const numbersCopy = [...numbers].map(num => num * 2);
+// const numbersCopy2 = Array.from(numbers).map(num => num * 3);
+
+// console.log(numbers);
+// console.log(numbersCopy);
+// console.log(numbersCopy2);
+
+
+
+
+// 3. Фільтрування та копіювання
+// Створіть поверхневу копію масиву products. Використовуючи метод filter, створіть новий масив expensiveProducts, 
+// що містить лише продукти, ціна яких більша за 100. Переконайтеся, що оригінальний масив products не змінився.
+
+
+// const products = [
+//   { name: 'Laptop', price: 1200 },
+//   { name: 'Mouse', price: 25 },
+//   { name: 'Keyboard', price: 75 },
+//   { name: 'Monitor', price: 300 }
+// ];
+
+// const expensiveProducts = Array.from(products).filter(item => item.price > 100);
+
+// console.log(expensiveProducts);
+// console.log(products);
+
+
+// 4. Зміна статусу
+// Створіть поверхневу копію масиву tasks. Переберіть елементи в новій копії та змініть значення completed на true для всіх завдань. 
+// Переконайтеся, що оригінальний масив залишився без змін.
+
+// const tasks = [
+//   { id: 1, text: 'Вивчити JavaScript', completed: false },
+//   { id: 2, text: 'Написати код', completed: false },
+//   { id: 3, text: 'Перевірити завдання', completed: false }
+// ];
+
+// const completedTasks = tasks.map(task => {
+//   // Перевіряємо, чи завдання вже виконане.
+//   if (task.completed === true) {
+//     // Якщо так, повертаємо його копію без змін.
+//     return { ...task };
+
+//     //якщо не  задати тут else, то якщо task.completed вже true, if-блок не виконається, 
+//     // і функція повертає undefined. У результаті, completedTasks буде містити undefined для таких елементів.
+//     // тому шо map() повинене виконати якусь операцію з кожним елементом, а функція повинна повертати щось інакше поверне undefined
+//     // і цей undefined замінить ті елементи які мали completed: true в початковому масиві
+//   } else {
+//     // Якщо ні, створюємо нову копію і змінюємо властивість completed.
+//     return { ...task, completed: true };
+//   }
+// });
+
+// console.log(completedTasks);
+
+
+
+
+// 5. Об'єднання та сортування
+// Створіть поверхневу копію масиву a, об'єднавши його з масивом b. Потім відсортуйте новий об'єднаний масив в порядку зростання.
+//  Виведіть обидва оригінальних масиви та новий об'єднаний масив. Переконайтеся, що a та b не були змінені.
+
+
+// const a = [5, 2, 8];
+// const b = [1, 9, 3, 10];
+// const aB = [...a, ...b].sort(function (a, b) {
+//     return a - b
+// });
+
+
+// console.log(aB);
+// console.log(aB2);
+
+// [5, 2, 8, 1, 9, 3, 10]
+// 5 - 2  = 3
+// [2, 5, 8, 1, 9, 3, 10]
+// 5 - 8 = -3
+// [2, 5, 8, 1, 9, 3, 10]
+// 8 - 1 = 7
+// 5 - 1 = 4
+// 2 - 1 = 1
+// [1, 2, 5, 8, 9, 3, 10].
+// 9 - 3 = 6
+// 8 - 3 = 5
+// 5 - 3 = 2
+// 2 - 3 = -1
+// [1, 2, 3, 5, 8, 9, 10]
+// 9 - 10 = -1
+// [1, 2, 3, 5, 8, 9, 10]
+
+
+// ['a', 'b', 'c'].slice(1, 2)
 
