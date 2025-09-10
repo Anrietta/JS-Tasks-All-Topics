@@ -2103,3 +2103,498 @@
 
 // ['a', 'b', 'c'].slice(1, 2)
 
+
+// ----------------------------------------------------------------------------------------------------------------------------
+
+
+// Завдання 1: Фільтрація та перетворення
+// Опис:
+// Дано масив об'єктів users. Відфільтруйте масив, щоб отримати лише користувачів, чий вік більше або дорівнює 30. 
+// Після цього, створіть новий масив, який містить лише імена цих користувачів у верхньому регістрі.
+// Вхідні дані:
+// const users = [
+//   { name: 'Іван', age: 25 },
+//   { name: 'Марія', age: 32 },
+//   { name: 'Петро', age: 41 },
+//   { name: 'Ольга', age: 28 },
+//   { name: 'Віктор', age: 35 }
+// ];
+// Очікуваний результат:
+// ['МАРІЯ', 'ПЕТРО', 'ВІКТОР']
+
+// const users = [
+//   { name: 'Іван', age: 25 },
+//   { name: 'Марія', age: 32 },
+//   { name: 'Петро', age: 41 },
+//   { name: 'Ольга', age: 28 },
+//   { name: 'Віктор', age: 35 }
+// ];
+
+
+// const seniorUsersNames = users
+//     .filter(user => user.age >= 30)
+//     .map(user => user.name.toUpperCase());
+
+// console.log(seniorUsersNames);  // ['МАРІЯ', 'ПЕТРО', 'ВІКТОР']
+// console.log(users);
+
+
+
+// Завдання 2: Обчислення середнього значення
+// Опис:
+// Дано масив чисел scores. Використовуючи метод reduce, обчисліть середнє арифметичне значення всіх елементів масиву.
+// Вхідні дані:
+// const scores = [85, 90, 78, 92, 88];
+// Очікуваний результат:
+// 86.6
+
+//  const scores = [85, 90, 78, 92, 88];
+
+//  const averageScore = scores.reduce((accum, score) => (accum + score), 0) / scores.length;
+//  console.log(averageScore);
+
+
+
+
+// Завдання 3: Пошук унікальних значень
+// Опис:
+// Дано масив data з повторюваними значеннями. Створіть новий масив, що міститиме лише унікальні значення, використовуючи комбінацію методів масивів або інших структур даних.
+// Вхідні дані:
+// const data = [1, 2, 3, 4, 3, 2, 5, 6, 1, 7];
+// Очікуваний результат:
+// [1, 2, 3, 4, 5, 6, 7]
+
+// const data = [1, 2, 3, 4, 3, 2, 5, 6, 1, 7];
+// const dataSet = Array.from(new Set(data));
+// console.log(dataSet);
+
+// const data = [1, 2, 3, 4, 3, 2, 5, 6, 1, 7];
+//     // Використовуємо метод filter() для створення нового масиву.
+//     // Кожен елемент `num` та його індекс `index` перевіряються.
+//     // Умова `data.indexOf(num) === index` є ключовою.
+//     // Вона повертає `true` лише для першої появи елемента.
+// let uniqueData = data.filter((num, index) => index === data.indexOf(num));
+// console.log(uniqueData);
+
+
+
+
+// Завдання 4: Групування за властивістю
+// Опис:
+// Дано масив products. Використовуючи reduce, згрупуйте продукти за категоріями, створюючи об'єкт, 
+// де ключами є назви категорій, а значеннями — масиви продуктів, що до них належать.
+// Вхідні дані:
+// const products = [
+//   { name: 'Яблуко', category: 'Фрукти' },
+//   { name: 'Морква', category: 'Овочі' },
+//   { name: 'Банан', category: 'Фрукти' },
+//   { name: 'Картопля', category: 'Овочі' },
+//   { name: 'Апельсин', category: 'Фрукти' }
+// ];
+// Очікуваний результат:
+// {
+//   "Фрукти": [
+//     { "name": "Яблуко", "category": "Фрукти" },
+//     { "name": "Банан", "category": "Фрукти" },
+//     { "name": "Апельсин", "category": "Фрукти" }
+//   ],
+//   "Овочі": [
+//     { "name": "Морква", "category": "Овочі" },
+//     { "name": "Картопля", "category": "Овочі" }
+//   ]
+// }
+
+// const products = [
+//   { name: 'Яблуко', category: 'Фрукти' },
+//   { name: 'Морква', category: 'Овочі' },
+//   { name: 'Банан', category: 'Фрукти' },
+//   { name: 'Картопля', category: 'Овочі' },
+//   { name: 'Апельсин', category: 'Фрукти' }
+// ];
+
+// /**
+//  * Групує елементи масиву за вказаною властивістю.
+//  * @param {Array} array - Масив для групування.і
+//  * @returns {Object} Об'єкт, згрупований за категоріями.
+//  */
+// const groupByCategory = (array) => {
+//   // Використовуємо метод .reduce() для ітерації по масиву та створення нового об'єкта.
+//   // .reduce() приймає два аргументи:
+//   // 1. Коллбек-функція, яка викликається для кожного елемента масиву.
+//   // 2. Початкове значення, яке стане першим значенням акумулятора. У нашому випадку це порожній об'єкт {}.
+//   return array.reduce((accumulator, currentProduct) => {
+//     // На кожній ітерації ми отримуємо два параметри:
+//     // - accumulator: поточний результат (об'єкт, що ми будуємо).
+//     // - currentProduct: поточний елемент масиву (один продукт).
+    
+//     // Отримуємо назву категорії поточного продукту.
+//     const category = currentProduct.category;
+
+//     // Перевіряємо, чи існує вже така категорія (ключ) в об'єкті-акумуляторі.
+//     if (!accumulator[category]) {
+//       // Якщо ні, створюємо новий ключ з назвою категорії та ініціалізуємо його порожнім масивом.
+//       accumulator[category] = [];
+//     }
+
+//     // Додаємо поточний продукт до масиву відповідної категорії.
+//     accumulator[category].push(currentProduct);
+
+//     // Важливо: завжди повертаємо акумулятор з коллбек-функції.
+//     // Це дозволяє передати змінений об'єкт на наступну ітерацію.
+//     return accumulator;
+//   }, {}); // {} - початкове значення для акумулятора.
+// };
+
+// const groupedProducts = groupByCategory(products);
+
+// console.log(groupedProducts);
+
+
+// Завдання 5: Перевірка на паліндром
+// Опис:
+// Напишіть функцію, яка приймає рядок і перевіряє, чи є він паліндромом (читається однаково в обох напрямках). 
+// Використовуйте методи масивів, щоб розбити, обернути та з'єднати рядок. Ігноруйте регістр та пробіли.
+// Вхідні дані:
+// "А роза упала на лапу Азора"
+// Очікуваний результат:
+// true
+
+// const palindrom = 'А роза упала на лапу Азора';
+
+
+// рішення не дуже вдале хоча і працює, томущо багато повторень коду
+// const isPalindrom = Array.from(palindrom.toLowerCase()).filter(char => char !== ' ').join('') === Array.from(palindrom.toLowerCase()).filter(char => char !== ' ').toReversed().join('');
+// console.log(Array.from(palindrom.toLowerCase()).filter(char => char !== ' ').toReversed().join(''));
+// console.log(Array.from(palindrom.toLowerCase()).filter(char => char !== ' ').join(''));
+// console.log(isPalindrom);
+
+// оптимальніше рішення (без дублювання коду і довгих рядків):
+
+// const initialStr = 'А роза упала на лапу Азора';
+
+// const isPalindrom = (str) => {
+    
+//     const cleanedStr = str.toLowerCase().replaceAll(' ', '');  // очистим рядок від пробілів і вирівняєм по нижньому регістру
+
+//     const reversedCleanedStr = Array.from(cleanedStr).reverse().join('');  // очищений рядок перевернемо ззаду на перед
+
+//     return cleanedStr === reversedCleanedStr;  // порівняємо обидва рядки
+// }
+
+// const isPalindromResult = isPalindrom(initialStr);  // збережемо результат порівняння щоб могти використати його далі (напр.вивести повідомлення)
+// const message = isPalindromResult ? `Рядок "${initialStr}" є паліндромом: ${isPalindromResult}` : `Рядок "${initialStr}" не є паліндромом: ${isPalindromResult}`;
+// console.log(message);
+
+
+// ще одне рішення без використання методів масивів
+// const initialStr = 'А роза упала на лапу Азора';
+// const cleanedStr = initialStr.toLowerCase().replaceAll(' ', '');
+// let reversedStr = '';
+
+// for (char of cleanedStr) {
+//     reversedStr = char + reversedStr;
+
+// }
+
+// const isPalindromResult = cleanedStr === reversedStr;
+// const message = isPalindromResult ? `Рядок "${initialStr}" є паліндромом: ${isPalindromResult}` : `Рядок "${initialStr}" не є паліндромом: ${isPalindromResult}`;
+// console.log(message);
+// console.log(cleanedStr);
+// console.log(reversedStr);
+
+
+// Завдання 6: Видалення дублікатів з масиву об'єктів
+// Опис:
+// Дано масив items з об'єктами, що містять повторювані значення id. Створіть новий масив, який містить лише унікальні об'єкти, ґрунтуючись на їхньому id.
+// Вхідні дані:
+// const items = [
+//   { id: 1, value: 'a' },
+//   { id: 2, value: 'b' },
+//   { id: 3, value: 'c' },
+//   { id: 2, value: 'd' },
+//   { id: 1, value: 'e' }
+// ];
+// Очікуваний результат:
+// [
+//   { id: 1, value: 'a' },
+//   { id: 2, value: 'b' },
+//   { id: 3, value: 'c' }
+// ]
+
+// const items = [
+//   { id: 1, value: 'a' },
+//   { id: 2, value: 'b' },
+//   { id: 3, value: 'c' },
+//   { id: 2, value: 'd' },
+//   { id: 1, value: 'e' }
+// ];
+
+
+// 1 варіант через Set
+// const seenIds = new Set();
+// const uniqueItems = [];
+
+// for (const item of items) {
+//     // Первеіряєм чи є id поточного елемента вже в існуючих Set (Set спочатку пустий, і так ми його поступово наповнимо унікальними ID)
+//     if (!seenIds.has(item.id)) {
+//         // якщо нема в Set поточної ID то додаємо її в Set і зразу додаємо елемент в масив uniqueItems
+//         // а якщо в Set вже є таке ID то воно просто ігнорується
+//         seenIds.add(item.id);
+//         uniqueItems.push(item);
+//     }
+// }
+
+// console.log(uniqueItems);
+
+
+// 2 варіант через .filter() та Map 
+
+// Використовуємо Map для зберігання унікальних ID
+// const seenIds = new Map();
+
+// const uniqueItems = items.filter(item => {
+//     // Використовуємо метод Map.has() для перевірки наявності ключа
+//     if (!seenIds.has(item.id)) {
+//         // Використовуємо метод Map.set() для додавання ключа
+//         seenIds.set(item.id, true);
+//         return true;
+//     }
+//     return false;
+// });
+
+// console.log('---');
+// console.log('Фінальний масив унікальних елементів:', uniqueItems);
+// console.log('Фінальний об’єкт seenIds (Map):', seenIds);
+
+// 3 варіант через .reduce()
+
+// const uniqueItems = items.reduce((accumulator, currentItem) => {
+//     // Шукаємо чи існує обєкт з таким id в акумуляторі
+//     const isDuplicate = accumulator.some(item => item.id === currentItem.id);
+
+//     // якщо не існує такого id в accumulator то додаємо в нього елемент(обєкт)
+//     // якщо існує то його ігноруємо
+//     if (!isDuplicate) {
+//         accumulator.push(currentItem);
+//     }
+
+//     // Повертаємо акумулятор - ми в ньому зробили відповідний масив унікальних обєктів
+//     return accumulator;
+
+// }, [])  // Початкове значення accumulator - пустий масив
+
+// console.log(uniqueItems);
+
+
+// 4 варіант через .filter() та обєкт
+
+// створюємо порожній обєкт для зберігання унікальних ID  - тобто ми в обєкт додаватимемо властивість ID знначення якого true
+// const seenIds = {};
+
+// const uniqueItems = items.filter(item => {
+
+//     // перевіряємо, чи є цей id в обєкті seenIds
+//     // якщо item.id не існує як ключ в seenIds, значить його не існує
+//     if (!seenIds[item.id]) {
+//         // додаємо id до seenIds та зберігаємо обєкт
+//         seenIds[item.id] = true;
+//         console.log(Array.from(seenIds));
+//         // додаємо елемент Item у новий масив uniqueItems (якщо перевірка для методу .filter повертає true то елемент зберігається в новий масив)
+//         return true;
+//     }
+
+//     // якщо item.id вже існує як ключ в seenIds то ми його ігноруємо і повертаємо до нього false
+//     // (якщо перевірка для методу .filter повертає false то елемент НЕ зберігається в новий масив)
+//     return false;
+// })
+// console.log(Array.from(seenIds));
+// console.log(uniqueItems);
+
+
+// 5 варіант через масив
+// const seenIdsArray = [];
+
+// const uniqueItemsWithIncludes = items.filter(item => {
+//     if (!seenIdsArray.includes(item.id)) {
+//         seenIdsArray.push(item.id);
+//         return true;
+//     }
+//     return false;
+// });
+
+// console.log(uniqueItemsWithIncludes);
+// console.log(seenIdsArray);
+
+
+// Завдання 7: Створення нового масиву без певного елемента
+// Опис:
+// Дано масив numbers та число 3. Створіть новий масив, який міститиме всі елементи, крім числа 3, не змінюючи оригінальний масив.
+// Вхідні дані:
+// const numbers = [1, 2, 3, 4, 5, 3];
+// const numberToRemove = 3;
+// Очікуваний результат:
+// [1, 2, 4, 5]
+
+// const numbers = [1, 2, 3, 4, 5, 3];
+// const numberToRemove = 3;
+
+// const changedNumbers = [...numbers].filter(num => num !== numberToRemove);
+// console.log(changedNumbers);
+
+// const changedNumbers2 = [];
+// for (let num of numbers) {
+//     if (num !== numberToRemove) {
+//         changedNumbers2.push(num);
+//     }
+// }
+// console.log(changedNumbers2);
+
+
+
+// Завдання 8: Злиття масивів з унікальними значеннями
+// Опис:
+// Дано два масиви, arr1 та arr2. Об'єднайте їх в один масив, який міститиме лише унікальні значення.
+// Вхідні дані:
+// const arr1 = [1, 2, 3];
+// const arr2 = [3, 4, 5];
+// Очікуваний результат:
+// [1, 2, 3, 4, 5]
+
+
+// const arr1 = [1, 2, 3];
+// const arr2 = [3, 4, 5];
+// const unitedArr = Array.from(new Set([...arr1, ...arr2]));
+// console.log(unitedArr);
+
+// const arr1 = [1, 2, 3];
+// const arr2 = [3, 4, 5];
+// const unitedArr2 = arr1.concat(arr2).reduce((unique, item) =>{
+//     return unique.includes(item) ? unique : [...unique, item];
+// }, [])
+// console.log(unitedArr2);
+
+// const arr1 = [1, 2, 3];
+// const arr2 = [3, 4, 5];
+// const unitedArr3 = arr1.concat(arr2).reduce((unique, item) =>{
+//      unique.includes(item) ? unique : unique.push(item);
+//      return unique;
+// }, [])
+// console.log(unitedArr3);
+
+
+
+// Завдання 9: Використання flatMap для вирівнювання та перетворення
+// Опис:
+// Дано масив масивів matrix. Використовуйте flatMap для створення одного масиву, який містить усі числа, помножені на 2.
+// Вхідні дані:
+// const matrix = [
+//   [1, 2],
+//   [3, 4],
+//   [5, 6]
+// ];
+// Очікуваний результат:
+// [2, 4, 6, 8, 10, 12]
+
+
+// const matrix = [
+//   [1, 2],
+//   [3, 4],
+//   [5, 6]
+// ];
+
+
+// // Використовуємо flatMap. 
+// // Для кожного підмасиву (subArray), ми створюємо новий масив,
+// // де кожен елемент помножений на 2.
+// // flatMap автоматично "вирівняє" ці масиви в один.
+// const result = matrix.flatMap(subArray => 
+//   subArray.map(number => number * 2)
+// );
+
+// // Виводимо результат у консоль для перевірки
+// console.log(result);
+
+
+// Очікуваний результат: [2, 4, 6, 8, 10, 12]
+
+
+// Завдання 9.1: Використання flatMap для вирівнювання та перетворення
+// Опис:
+// Дано масив масивів matrix. Використовуйте flatMap для створення одного масиву, який містить усі числа, помножені на 2.
+// Вхідні дані:
+// const matrix = [
+//   [10, [1, 2]],
+//   [20, [3, 4]],
+//   [30, [5, 6]]
+// ];
+// Очікуваний результат: [10, 2, 4, 20, 6, 8, 30, 10, 12]
+
+// /**
+//  * Transforms a complex nested array by applying a function
+//  * to its inner numerical elements and flattening the result.
+//  */
+// function transformMatrix(matrix) {
+//   // We use flatMap тому що ми хочемо отримати єдиний, "плоский" масив
+//   // на виході, згладивши всі підмасиви, які повертає наша функція-колбек.
+//   return matrix.flatMap(item => {
+//     // Кожен елемент "item" є масивом, наприклад, [10, [1, 2]]
+//     const number = item[0]; // Перший елемент - це число
+//     const subArray = item[1]; // Другий елемент - це підмасив
+
+//     // Ми використовуємо метод map для того, щоб перетворити кожен елемент
+//     // в subArray, помноживши його на 2.
+//     const transformedSubArray = subArray.map(num => num * 2);
+
+//     // Функція-колбек flatMap має повернути масив, який потім буде "згладжено".
+//     // Тому ми створюємо новий масив, який містить оригінальне число
+//     // та елементи з нашого перетвореного підмасиву.
+//     // Оператор "..." (spread) розпаковує елементи transformedSubArray
+//     // і додає їх в новий масив.
+//     return [number, ...transformedSubArray];
+//   });
+// }
+
+// const matrix = [
+//   [10, [1, 2]],
+//   [20, [3, 4]],
+//   [30, [5, 6]]
+// ];
+
+// const result = transformMatrix(matrix);
+// console.log(result);
+// // Очікуваний результат: [10, 2, 4, 20, 6, 8, 30, 10, 12]
+
+
+
+
+
+// Завдання 10: Пошук найдовшого слова
+// Опис:
+// Дано рядок sentence. Знайдіть найдовше слово в цьому реченні. Ігноруйте розділові знаки.
+// Вхідні дані:
+// const sentence = "Це є дуже цікаве та складне завдання!";
+// Очікуваний результат:
+// "завдання"
+
+
+// const sentence = "Це є дуже цікаве та складне завдання!";
+
+// const word = sentence
+//   // Замінюємо всі розділові знаки (наприклад, крапку, кому, знак оклику)
+//   // на порожній рядок. Регулярний вираз /[.,!?]/g означає:
+//   // - [...] - будь-який символ всередині дужок.
+//   // - g - прапорець, що означає "глобальний пошук", тобто замінити всі збіги, а не лише перший.
+//             .replace(/[.,!?]/g, '')
+//             .split(' ')
+//             .reduce((accum, word) => {
+
+//     if (word.length > accum.length) {
+//         accum = word;
+
+//     }
+//     return accum;
+// }, '');
+// console.log(word);
+
+
+
