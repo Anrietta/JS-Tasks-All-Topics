@@ -2597,4 +2597,163 @@
 // console.log(word);
 
 
+// ----------------------------------------------------------------------------------------------------------------------
+
+// Завдання 1: Привітання з колбеком
+// Створи функцію sayHello, яка приймає два аргументи:
+// Ім'я (рядок).
+// Колбек-функцію callback.
+// Всередині sayHello потрібно викликати колбек-функцію, передавши їй рядок-привітання, який ти створиш.
+// Ось як це має працювати:
+// Ти створюєш окрему функцію logMessage для виведення повідомлення в консоль.
+// Ти викликаєш sayHello, передаючи туди своє ім'я та функцію logMessage як колбек.
+// Приклад використання:
+// sayHello("Оксана", logMessage); // У консолі має з'явитися "Привіт, Оксана!"
+
+// function sayHello(name, cb) {
+//     return cb(name);
+// }
+
+// function logMessage(name) {
+//     console.log(`Привіт, ${name}!`);
+// }
+
+
+// sayHello('Анна', logMessage);
+
+
+
+
+// Завдання 2: Обробка чисел з колбеком
+// Створи функцію processNumbers, яка приймає два аргументи:
+// Масив чисел numbers.
+// Колбек-функцію callback.
+// Всередині processNumbers ти маєш перебрати масив numbers і для кожного елемента викликати колбек-функцію, передаючи їй цей елемент.
+// Приклад використання:
+// Створи масив чисел, наприклад [1, 2, 3].
+// Створи колбек-функцію doubleNumber, яка подвоює число і виводить результат у консоль.
+// Виклич processNumbers, передавши туди масив і функцію doubleNumber.
+
+// const numArr = [1, 2, 3];
+
+// function processNumbers(arr, cb) {
+//     arr.forEach(elem => {
+//         cb(elem);
+//     })
+// }
+
+// function doubleNumber(elem) {
+//     console.log(elem * 2);
+// }
+
+// processNumbers(numArr, doubleNumber);
+
+
+
+
+// Завдання 3: Фільтрація даних з колбеком
+// Створи функцію filterArray, яка приймає два аргументи:
+// Масив array.
+// Колбек-функцію callback (це функція-умова, яка повертає true або false).
+// Функція filterArray повинна повернути новий масив, що містить тільки ті елементи, для яких колбек-функція повернула true.
+// Приклад використання:
+// Створи масив рядків, наприклад, ["apple", "banana", "kiwi", "grape"].
+// Створи колбек-функцію isLongEnough, яка перевіряє, чи довжина рядка більша за 4 символи.
+// Виклич filterArray, передавши туди масив і функцію isLongEnough.
+
+
+// const fruits = ["apple", "banana", "kiwi", "grape"];
+
+// function isLongEnough(item) {
+
+//     if (item.length <= 4) {
+//         return false;
+//     }
+//     return true;
+// }
+
+// function filterArray(arr, cb) {
+    
+//     return arr.filter(item => {
+//         return cb(item);
+//     })
+// }
+
+// const filteredArr = filterArray(fruits, isLongEnough);
+// console.log(filteredArr);
+
+
+
+
+// Завдання 4: Трансформація даних з колбеком
+// Створи функцію transformArray, яка приймає два аргументи:
+// Масив чисел array.
+// Колбек-функцію callback.
+// Функція transformArray повинна повернути новий масив, кожен елемент якого є результатом виклику колбек-функції з відповідним елементом оригінального масиву.
+// Приклад використання:
+// Створи масив чисел, наприклад, [1, 2, 3, 4].
+// Створи колбек-функцію addTen, яка додає 10 до числа.
+// Виклич transformArray, передавши туди масив і функцію addTen.
+
+// const numbers = [1, 2, 3, 4];
+
+// function transformArray(arr, cb) {
+//     return arr.map(num => cb(num));
+// }
+
+// function addTen(num) {
+
+//     return num + 10;
+// }
+
+// const transformedArray = transformArray(numbers, addTen);
+// console.log(transformedArray);
+
+
+
+// Завдання 5: Обробка помилок із колбеками
+// Створи функцію calculateAndHandle, яка приймає три аргументи:
+// Два числа: num1 і num2.
+// Колбек-функцію onSuccess, яка буде викликана, якщо обчислення успішне.
+// Колбек-функцію onError, яка буде викликана, якщо сталася помилка.
+// Функція calculateAndHandle повинна виконувати ділення num1 / num2.
+// Якщо num2 дорівнює 0, це помилка. Виклич onError і передай їй повідомлення про помилку.
+// В іншому випадку, якщо ділення успішне, виклич onSuccess і передай їй результат обчислення.
+// Приклади використання:
+// Виклич calculateAndHandle(10, 2, ...) з колбеками, які виводять результат.
+// Виклич calculateAndHandle(10, 0, ...) з колбеками, які виводять помилку.
+
+
+
+// function calculateAndHandle(num1, num2, cb) {
+//     if (num2 === 0) {
+//         onError(`Помилка, ділити на 0 не можливо!`);
+//     } else {
+//         const result = num1 / num2;
+//         onSuccess(result);
+//     }
+
+
+// }
+// function onSuccess(result) {
+//     console.log(result);
+// }
+
+// function onError(result) {
+//     console.log(result);
+// }
+
+// calculateAndHandle(10, 2, onSuccess);
+// calculateAndHandle(10, 2, onError);
+// calculateAndHandle(10, 0, onError);
+// calculateAndHandle(10, 0, onSuccess);
+
+
+
+
+
+
+
+  
+
 
