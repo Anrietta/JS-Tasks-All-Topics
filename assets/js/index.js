@@ -2750,10 +2750,140 @@
 
 
 
+// --------------------------------------------------------------------------------------------------------------------
+
+// Для кожної задачі тобі потрібно буде написати дві окремі функції:
+// Перша функція має використовувати об'єкт arguments.
+// Друга функція має використовувати рест-параметр (...rest).
+// Ось завдання:
+
+// Завдання 1: Сума чисел
+// Створи функцію sum, яка приймає необмежену кількість чисел і повертає їхню суму.
+// sum(1, 2, 3) повинна повернути 6.
+// sum(5, 10, 15, 20) повинна повернути 50.
+
+
+// function sum () {
+//     let total = 0;
+
+//     for (let i = 0; i < arguments.length; i++) {
+//         total += arguments[i];
+//     }
+//     return total;
+// }
+// console.log(sum(1, 2, 3));
+// console.log(sum(5, 10, 15, 20));
+
+
+// function sum2(...rest) {
+
+//          return rest.reduce((accum, curr) => accum + curr);
+
+// }
+// console.log(sum2(1, 2, 3));
+// console.log(sum2(5, 10, 15, 20));
+
+
+// Завдання 2: Об'єднання рядків
+// Створи функцію concatStrings, яка приймає необмежену кількість рядків і об'єднує їх в один, розділяючи кожен рядок пробілом.
+// concatStrings('Hello', 'world', 'from', 'JS') повинна повернути 'Hello world from JS'.
+// concatStrings('Today', 'is', 'a', 'great', 'day') повинна повернути 'Today is a great day'.
+
+
+// function concatStrings() {
+
+//     let concatedStrings = '';
+//     for (let word of arguments) {
+
+//         concatedStrings+= word + ' ';
+
+
+//     }
+//     return concatedStrings.trim();
+// }
+
+// console.log(concatStrings('Hello', 'world', 'from', 'JS'));
+// console.log(concatStrings('Today', 'is', 'a', 'great', 'day'));
+
+
+// function concatStrings2(...rest) {
+//     return rest.join(' ');
+
+// }
+
+// console.log(concatedStrings('Hello', 'world', 'from', 'JS'));
+// console.log(concatedStrings('Today', 'is', 'a', 'great', 'day'));
+
+
+// const concatedStrings = (...rest) => rest.join(' ');
+
+// console.log(concatedStrings('Hello', 'world', 'from', 'JS'));
+// console.log(concatedStrings('Today', 'is', 'a', 'great', 'day'));
 
 
 
+// Завдання 3: Фільтрування непарних чисел
+// Створи функцію filterOdd, яка приймає необмежену кількість чисел. Перший аргумент — це початкове число, а всі наступні — це числа, з яких потрібно відфільтрувати непарні. Функція має повертати масив непарних чисел.
+// filterOdd(10, 1, 2, 3, 4, 5) повинна повернути [1, 3, 5].
+// filterOdd(0, 10, 11, 12, 13) повинна повернути [11, 13].
 
-  
+// function filterOdd() {
+//     let oddNums = [];
+//     for (num of arguments) {
+//         if (num % 2 === 1) {
+//             oddNums.push(num);
+//         }
+//     }
+//     return oddNums;
+// }
 
+// console.log(filterOdd(10, 1, 2, 3, 4, 5));
+// console.log(filterOdd(0, 10, 11, 12, 13));
+
+// function filterOdd2(...numbers) {
+//     return numbers.filter(number => number % 2 === 1);
+// }
+
+// console.log(filterOdd2(10, 1, 2, 3, 4, 5));
+// console.log(filterOdd2(0, 10, 11, 12, 13));
+
+
+// const filterOdd3 = (...numbers) => numbers.filter(number => number % 2 === 1)
+// console.log(filterOdd3(10, 1, 2, 3, 4, 5));
+// console.log(filterOdd3(0, 10, 11, 12, 13));
+
+// Завдання 4: Знайти найдовший рядок
+// Створи функцію findLongestString, яка приймає необмежену кількість рядків і повертає найдовший з них.
+// findLongestString('a', 'apple', 'banana', 'cat') повинна повернути 'banana'.
+// findLongestString('short', 'this is a long string', 'medium') повинна повернути 'this is a long string'.
+
+
+// function findLongestString() {
+//     let longestWord = '';
+//     for (word of arguments) {
+//         if (word.length > longestWord.length) {
+//             longestWord = word;
+//         }
+//     }
+//     return longestWord;
+// }
+
+// console.log(findLongestString('a', 'apple', 'banana', 'cat'));
+// console.log(findLongestString('short', 'this is a long string', 'medium'));
+
+
+// function findLongestString(...strings) {
+//     return strings.reduce((accum ,currentStr) => {
+//         if (currentStr.length > accum.length) {
+//             accum = currentStr;
+//             return accum;
+//         } else {
+//             return accum;
+//         }
+//  },'')
+ 
+// }
+
+// console.log(findLongestString('a', 'apple', 'banana', 'cat'));
+// console.log(findLongestString('short', 'this is a long string', 'medium'));
 
