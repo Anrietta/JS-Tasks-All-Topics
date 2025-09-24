@@ -2887,3 +2887,1201 @@
 // console.log(findLongestString('a', 'apple', 'banana', 'cat'));
 // console.log(findLongestString('short', 'this is a long string', 'medium'));
 
+
+// -------------------------------------------------------------------------------------------------------------------------------------------
+
+
+// Завдання 1: Аналіз довжини та регістру
+// Опис: Вам дано рядок: "Привіт, Світ! Це - Python!"
+// Завдання:
+// Знайдіть і виведіть на екран довжину цього рядка.
+// Створіть його копію, де всі літери будуть великими.
+// Створіть його копію, де всі літери будуть малими.
+// Виведіть кожну з цих копій на екран.
+
+// const str = 'Привіт, Світ! Це - Python!';
+// console.log(str.length);
+// const strCopy = str.slice(0).toUpperCase();
+// console.log(strCopy);
+// const strCopy1 = str.slice(0).toLowerCase();
+// console.log(strCopy1);
+
+
+
+
+// Завдання 2: Пошук та заміна
+// Опис: Вам дано рядок: "Програмування - це весело і захоплююче!"
+// Завдання:
+// Перевірте, чи міститься в цьому рядку слово "весело".
+// Замініть слово "весело" на "круто".
+// Виведіть на екран початковий результат перевірки (true або false) та новий рядок після заміни.
+
+// const str = 'Програмування - це весело і захоплююче!';
+// console.log(str.includes('весело'));
+// const str1 = str.replace('весело', 'круто');
+// console.log(str1);
+
+
+
+// Завдання 3: Розбиття та з'єднання рядків
+// Опис: Вам дано рядок: "HTML, CSS, JavaScript, Python, C++"
+// Завдання:
+// Розділіть цей рядок на окремі елементи (мови програмування) за допомогою коми та пробілу.
+// З'єднайте отримані елементи в новий рядок, використовуючи як роздільник знак | (вертикальна риска).
+// Виведіть на екран обидва результати: масив після розбиття і новий рядок після з'єднання.
+
+// const str = 'HTML, CSS, JavaScript, Python, C++';
+
+// const arr = str.split(', ')
+// const newStr = arr.join('|');
+// console.log(arr);
+// console.log(newStr);
+
+
+
+
+// Завдання 4: Перетворення та форматування
+// Опис: Вам дано число у вигляді рядка: "12345"
+// Завдання:
+// Перетворіть цей рядок на число.
+// Застосуйте до числа математичну операцію (наприклад, додайте 100).
+// Перетворіть отриманий результат назад у рядок.
+// Виведіть на екран тип даних початкового рядка, тип даних числа, тип даних кінцевого рядка, а також сам кінцевий рядок.
+
+
+// const str = '12345';
+// const num = +str + 100;
+// const str1 = num.toString();
+// console.log(typeof str);
+// console.log(typeof num);
+// console.log(typeof str1);
+// console.log(str1);
+
+
+
+
+// Завдання 5: Пошук та індекси
+// Опис: Вам дано рядок: "JavaScript — це мова програмування, яка робить вебсайт динамічним."
+// Завдання:
+// Знайдіть індекс першого входження слова "мова".
+// Знайдіть індекс останнього входження слова "динамічним".
+// Знайдіть індекс слова "Hello".
+// Виведіть на екран усі три індекси.
+
+
+// const str = 'JavaScript — це мова програмування, яка робить вебсайт динамічним.';
+// console.log(str.indexOf('мова'));
+// console.log(str.lastIndexOf('динамічним'));
+// console.log(str.indexOf('Hello'));
+
+
+
+// Завдання 6: Підрахунок символів
+// Опис: У вас є рядок, що містить речення. 
+// Ваше завдання — підрахувати кількість літер 'a' (як великих, так і малих) у цьому реченні.
+// Рядок: "Яблуко — це дуже корисний фрукт, адже там багато вітамінів."
+// Завдання: Напишіть код, який знайде кількість літер 'а' та виведе результат на консоль. 
+// Підказка: скористайтеся методом toLowerCase() та split().
+
+
+// const phrase = 'Яблуко — це дуже корисний фрукт, адже там багато вітамінів.';
+// const phraseToLowerCase = phrase.toLowerCase();
+// let charQuantity = 0;
+// for (char of phraseToLowerCase) {
+
+//     if (char === 'а') {
+//         charQuantity += 1;
+//     }
+    
+// }
+// console.log(charQuantity);
+
+
+// const phrase = 'Яблуко — це дуже корисний фрукт, адже там багато вітамінів.';
+// const phraseToLowerCase = phrase.toLowerCase();
+// const findA = /а/g;
+// const foundA = phraseToLowerCase.match(findA);
+// console.log(phraseToLowerCase);
+// console.log(foundA.length);
+
+
+// Це ще один спосіб, який іноді використовують для таких завдань.
+//  Його суть полягає в тому, щоб розбити рядок на масив, використовуючи цільовий символ як роздільник. 
+// Кількість елементів у масиві буде на один більшою, ніж кількість роздільників. 
+// Тому, щоб отримати кількість символів, потрібно відняти одиницю від довжини масиву.
+
+// const phrase = 'Яблуко — це дуже корисний фрукт, адже там багато вітамінів.';
+// const phraseToLowerCase = phrase.toLowerCase();
+// const countA = phraseToLowerCase.split('а').length - 1;
+// console.log(phraseToLowerCase.split('а'));
+// console.log(countA);
+
+
+
+
+// Завдання 7: Перевірка на паліндром
+// Опис: Паліндром — це слово або речення, яке читається однаково в обох напрямках. 
+// Наприклад, "корок" або "А роза упала на лапу Азора".
+// Ваше завдання — написати код, який перевірятиме, чи є даний рядок паліндромом.
+// Рядок: "А роза упала на лапу Азора"
+// Завдання: Напишіть код, який видалить усі пробіли та переведе рядок у нижній регістр, а потім перевірить, чи є він паліндромом. Виведіть результат (true або false) на консоль.
+
+// const phrase = 'А роза упала на лапу Азора';
+// const changedFrase = phrase.toLocaleLowerCase().replaceAll(' ', '');
+// const standartizedFrase = Array.from(changedFrase).reverse().join('')
+
+
+// if (changedFrase === standartizedFrase) {
+//     console.log(`This phrase is a palindrom`);
+// } else {
+//     console.log('This phrase is not a palindrom');
+// }
+
+// console.log(standartizedFrase);
+// console.log(changedFrase);
+
+
+
+// const isPalindrome = (str) => {
+//   // Переводимо рядок у нижній регістр та видаляємо пробіли за допомогою регулярних виразів
+//   const cleanStr = str.toLowerCase().replace(/\s/g, '');
+
+//   // Створюємо перевернутий рядок, розбиваємо посимвольно, перевертаємо та об'єднуємо
+//   const reversedStr = cleanStr.split('').reverse().join('');
+
+//   // Порівнюємо початковий та перевернутий рядки
+//   return cleanStr === reversedStr;
+// };
+
+// // Приклади використання
+// const phrase1 = 'А роза упала на лапу Азора';
+// const phrase2 = 'Привіт, світ';
+
+// console.log(`"${phrase1}" є паліндромом: ${isPalindrome(phrase1)}`);
+// console.log(`"${phrase2}" є паліндромом: ${isPalindrome(phrase2)}`);
+
+
+
+// const phrase = 'А роза упала на лапу Азора';
+
+// function isPalindrom (string) {
+//     const changedFrase = string.toLocaleLowerCase().replaceAll(' ', '');
+//     let palindromPhrase = '';
+
+//     for (char of changedFrase) {
+//         palindromPhrase = char + palindromPhrase;
+//     }
+
+//     if (changedFrase === palindromPhrase) {
+//         return `This phrase is a palindrom`
+//     } else {
+//         return `This phrase is not a palindrom`
+//     }
+// }
+
+// console.log(isPalindrom(phrase));
+
+
+
+
+
+// Завдання 8: Скорочення рядка
+// Опис: Вам потрібно скоротити довгий рядок до певної довжини, додавши в кінці три крапки (...).
+// Рядок: "Сьогодні чудовий день для вивчення JavaScript"
+// Довжина: 20
+// Завдання: Напишіть код, який перевірить довжину рядка. 
+// Якщо вона більша за 20 символів, скоротіть його до 20 символів і додайте ... в кінці. 
+// Виведіть результат на консоль.
+
+// const phrase = 'Сьогодні чудовий день для вивчення JavaScript';
+
+// const shortenPhrase = (str) => {
+//     if (str && str.length > 20) {
+//         return str.substr(0, 20).concat('...');
+//     } else {
+//         return str;
+//     }
+// }
+
+// console.log(shortenPhrase(phrase));
+
+
+// Завдання 9: Заміна слів у реченні
+// Опис: Вам потрібно замінити всі входження одного слова в реченні на інше.
+// Рядок: "Я вивчаю JavaScript, тому що JavaScript — це круто!"
+// Завдання: Замініть усі входження слова "JavaScript" на "Node.js" і виведіть оновлений рядок на консоль. Підказка: використайте метод replace() із регулярним виразом та прапорцем g.
+
+
+// const phrase = 'Я вивчаю JavaScript, тому що JavaScript — це круто!';
+// const wordToReplace = 'Node.js'
+// const wordToBeReplaced = 'JavaScript'
+
+// const changePhrase = (str, word1, word2) => str.replaceAll(word1, word2);
+
+// console.log(changePhrase(phrase, wordToBeReplaced, wordToReplace));
+
+
+
+
+// Завдання 10: Форматування імені
+// Опис: У вас є рядок з ім'ям, але він містить зайві пробіли та написаний не в тому регістрі.
+// Рядок: "  іван пЕТРовИЧ   "
+// Завдання:
+// Видаліть зайві пробіли на початку та в кінці рядка.
+// Зробіть першу літеру кожного слова великою, а решту — маленькими.
+// Виведіть відформатоване ім'я на консоль.
+
+// const name = '  іван пЕТРовИЧ   ';
+
+// const formattedName = (str) => {
+//     const trimmedAndLower = str.trim().toLowerCase();
+
+//     const words = trimmedAndLower.split(' ');
+//   // Проходимо по кожному слову, робимо першу літеру великою і додаємо решту слова,  повертаємо оновлений масив
+//     const formattedWords = words.map(word => {
+//         if (word.length > 0) {
+//             return word.charAt(0).toUpperCase() + word.slice(1);
+//         }
+//         return '';
+//     })
+
+//     return formattedWords.join(' ');
+// }
+
+// console.log(formattedName(name));
+
+
+
+
+// Завдання 11: Аналіз рядка
+// Напишіть функцію, яка приймає рядок і повертає об'єкт з наступною інформацією:
+// Кількість слів у рядку.
+// Кількість символів у рядку (без пробілів).
+// Найдовше слово в рядку.
+// Масив унікальних слів у рядку (без повторень).
+// Ось початкові дані:
+// const text = '  Я вивчаю JavaScript, тому що JavaScript - це круто!  ';
+
+// const text = '  Я вивчаю JavaScript, тому що JavaScript - це круто!  ';
+
+// const analizeText = (str) => {
+//     const strNoPunctuation = str
+//         .trim()
+//         .replaceAll(/[.,!?;:"'-]/g, '')
+//         .replace(/\s+/g, ' ');
+
+//     const wordsAmount = strNoPunctuation.split(' ');
+
+//     const symbolAmount = strNoPunctuation.replace(/\s/g, '');
+
+//     const longestWord = wordsAmount.reduce((longest, current) => {
+//         return current.length > longest.length ? current : longest;
+//     }, '');
+
+//     const uniqueWords = Array.from(new Set(wordsAmount));
+
+//     return {
+//         words: wordsAmount.length,
+//         symbols: symbolAmount.length,
+//         longestWord: longestWord,
+//         uniqueWords: uniqueWords
+//     }
+
+// }
+
+// console.log(analizeText(text));
+
+
+
+
+
+// Завдання 12: Керування списком покупок
+// Напишіть одну функцію manageShoppingList, яка приймає три аргументи:
+// list: початковий масив рядків (список покупок).
+// action: рядок, який вказує, що робити. Можливі значення: 'add', 'remove', 'check'.
+// item: рядок, який представляє товар.
+// Функція повинна:
+// Якщо action дорівнює 'add', додати item до кінця списку.
+// Якщо action дорівнює 'remove', видалити перше входження item зі списку. Якщо товар не знайдено, нічого не робити.
+// Якщо action дорівнює 'check', перевірити, чи є item у списку. Повернути true або false.
+// УВАГА! Функція повинна бути pure function, тобто вона не повинна змінювати початковий масив list. Завжди повертайте новий масив.
+// Покажіть, як ви можете використати цю функцію для трьох різних дій.
+
+
+// const productsList = ['apple', 'kiwi', 'orange', 'banana', 'pineapple'];
+
+// /**
+//  * Керує списком покупок, виконуючи додавання, видалення або перевірку наявності товару.
+//  * Функція є чистою і не змінює початковий список.
+//  * @param {string[]} list - Початковий список покупок.
+//  * @param {string} action - Дія ('add', 'remove', 'check').
+//  * @param {string} item - Товар для додавання/видалення/перевірки.
+//  * @returns {string[] | boolean} Оновлений список або булеве значення.
+//  */
+
+// const manageShoppingList = function (list, action, item) {
+
+//     switch (action) {
+//         case 'add':
+//             // Додаємо елемент і повертаємо новий масив
+//             return addProduct(list, item);
+//             // break;  // в цьому випадку break непотрібні в жодному case тому що кожен з case містить return, який і зупинить виконання і switch і всієї функції
+//         case 'remove':
+//             return removeProduct(list, item);
+//             // break;
+//         case 'check':
+//             return checkProduct(list, item);
+//             // break;
+//         default:
+//             console.error("Помилка: Невідома дія!");
+//             return [...list];
+//     }
+
+// }
+
+// function addProduct (list, item) {
+//      return [...list, item];
+// }
+
+// function removeProduct (list, item) {
+//     // Знаходимо індекс першого входження товару
+//       const index = list.indexOf(item);
+//       // Якщо товар знайдено (індекс не -1)
+//       if (index !== -1) {
+//         // Повертаємо новий масив, видаляючи один елемент за індексом, а саме:
+//         // 1. розпаковуємо частину масиву від індекса 0 до того індекса де ми знайшли потрібний елемент(той що видаляємо)
+//         // 2. розпаковуємо другу частину масиву від індекса наступного від потрібного елемента(той що видаляємо) і до кінця масива
+//         // 3. таким чином ми розпаковуємо весь початковий масив крім того елемента який потрібно було видалити
+//         // 4. Обєднуємо обидва шматки масива в один новий масив (бо розпаковуємо їх послідовно в [])
+//         // 5. Повертаємо копію зконкатенованого масиву 
+//         return [...list.slice(0, index), ...list.slice(index + 1)];
+//       }
+//       // Якщо товар не знайдено (індекс -1), повертаємо незмінну копію списку
+//       return [...list];
+// }
+
+// function checkProduct (list, item) {
+//     return list.includes(item);
+// }
+
+// console.log(manageShoppingList(productsList, 'add', 'banana'));
+// console.log(manageShoppingList(productsList, 'remove', 'apple'));
+// console.log(manageShoppingList(productsList, 'check', 'pomegranate'));
+// console.log(productsList);
+
+
+
+
+
+// Завдання 13: Аналіз тексту та підрахунок слів
+// Напишіть одну функцію analyzeTextAndCount, яка приймає два аргументи:
+// text: рядок, що містить речення з текстом.
+// stopwords: масив рядків, які потрібно виключити з аналізу.
+// Функція повинна:
+// Перетворити весь текст на нижній регістр.
+// Видалити з тексту всю пунктуацію (коми, крапки, знаки оклику тощо).
+// Видалити всі слова, які містяться у масиві stopwords.
+// Підрахувати, скільки разів кожне слово, що залишилося, зустрічається в тексті.
+// Повернути об'єкт, де ключами будуть слова, а значеннями — їхня кількість.
+// Наприклад:
+// Якщо text = "Привіт, світ! Привіт, JavaScript." і stopwords = ['привіт'], ваша функція повинна повернути: { світ: 1, javascript: 1 }.
+
+
+// const text = 'Привіт, світ! Я вивчаю JavaScript, тому що JavaScript — це круто, і це дуже цікаво.';
+// const stopwords = ['я', 'це', 'що', 'і', 'дуже', 'тому', 'що'];
+
+// /**
+//  * Аналізує текст, видаляючи стоп-слова та підраховуючи частоту кожного слова.
+//  * @param {string} text - Початковий рядок тексту.
+//  * @param {string[]} stopwords - Масив слів, які потрібно виключити.
+//  * @returns {object} Об'єкт з частотою слів.
+//  */
+// function analyzeTextAndCount(text, stopwords) {
+//   const textLower = text
+//     .toLowerCase()
+//     .replaceAll(/[.,!?;:"—'-]/g, '')
+//     .replaceAll(/\s+/g, ' ')
+//     .split(' ');
+
+//     const filteredWords = textLower.filter((word) => !stopwords.includes(word))
+//     const wordCounts = filteredWords.reduce((acc, word) => {
+//         // Перевіряємо, чи слово вже є в акумуляторі (об'єкті acc) через дужкову нотацію, тому що word це змінна що містить значення для нашої властивості
+//         if (acc[word]) {
+//             // Якщо так, збільшуємо його значення
+//             acc[word] += 1;
+//         } else {
+//             // Якщо ні, ініціалізуємо його зі значенням 1
+//             acc[word] = 1;
+//         }
+//         // Завжди повертаємо акумулятор для наступної ітерації
+//         return acc;
+
+//     }, {});  // Початкове значення акумулятора - порожній об'єкт
+
+//     return wordCounts;  
+
+// }
+
+// console.log(analyzeTextAndCount(text, stopwords));
+
+
+
+
+
+// Ваше завдання
+// А тепер ваше завдання: напишіть функцію countVowels, яка підраховує кількість голосних літер у рядку.
+// Голосні: 'a', 'e', 'i', 'o', 'u' (не забувайте про українські, якщо хочете: 'а', 'е', 'и', 'і', 'ї', 'о', 'у', 'ю', 'я').
+// Використайте reduce і порожній об'єкт як початкове значення. На кожній ітерації перевіряйте, чи поточна літера є голосною,
+//  і оновлюйте акумулятор. Якщо ви виявите голосну, ви можете або збільшити загальний лічильник, або, що складніше, 
+//  підрахувати кількість кожної окремої голосної.
+
+// const str = 'Привіт світ у тебе є я';
+
+// /**
+//  * Counts every vowel in string
+//  * @param {string} string - string to count vowels
+//  * @returns {object} Object of vowels and their quantity
+//  */
+// function countVowels(string) {
+//     const clearStr = string.toLowerCase().split('');
+//     const vowels = ['a', 'o', 'u', 'e', 'i', 'а', 'о', 'у', 'е', 'и', 'і', 'ї', 'є', 'ю', 'я'];
+//     // debugger;
+//     const countedVowels = clearStr.reduce((acc, char) => {
+//         if (vowels.includes(char)) {
+
+//             acc[char] ? acc[char] += 1 : acc[char] = 1;
+
+//             // Ще коротший і крутіший варіант :
+//             // Якщо властивість не існує, acc[char] буде undefined тому Оператор || поверне 0 а потім ми додамо 1 
+//             // (acc[char] || 0 поверне 0, потім 0 + 1 буде = 1.)
+//             // Якщо властивість вже існує то повернеться 1, а потім вираз 1 + 1, де ми отримаєм друге входження, поім третє, тощо
+//             // acc[char] = (acc[char] || 0) + 1;
+//         }
+//         return acc;
+//     }, {})
+//     return countedVowels;
+// }
+
+// console.log(countVowels(str));
+
+
+
+
+// Завдання 14
+// Напишіть функцію wordFrequency, яка приймає рядок і повертає об'єкт з кількістю входжень кожного слова.
+// Не забувайте переводити всі слова в нижній регістр.
+// Видаліть усі розділові знаки (., ,, !, ? тощо), щоб вони не впливали на підрахунок.
+
+// function wordFrequency(str) {
+//     // debugger;
+//     const clearStrToArr = str
+//         .toLowerCase()
+//         .replaceAll(/[.—,!?;:"'–-]/g, '')
+//         .replaceAll(/\s+/g, ' ')
+//         .trim()
+//         .split(' ')
+//         .reduce((acc,currWord) => {
+//             if (currWord) {
+//             // acc[currWord] ? acc[currWord] += 1 : acc[currWord] = 1;
+//             acc[currWord] = (acc[currWord] || 0) + 1;
+//             }
+
+//             return acc;
+//         }, {});
+
+//     return clearStrToArr;
+// }
+
+// const text = 'Оповідання — невеликий за обсягом прозовий твір, у якому зображувалась одна подія з життя одного або двох сформованих персонажів. Невеликі розміри оповідання вимагають нерозгалуженого, як правило, однолінійного, чіткого за побудовою сюжету.';
+// console.log(wordFrequency(text));
+
+
+
+// Завдання: Пошук електронних адрес
+// Напиши функцію на JavaScript, яка приймає великий текст і знаходить у ньому всі електронні адреси. Результатом має бути масив з усіма знайденими адресами.
+// Ось кілька вимог:
+// Функція повинна знайти всі адреси, незалежно від того, де вони знаходяться в тексті.
+// Вона має бути чутливою до регістру, але результат має повертати у нижньому регістрі.
+// Адреси можуть містити літери, цифри, крапки та тире.
+// Підказка:
+// Секрет успіху тут — у правильному регулярному виразі.  Електронна адреса має чітку структуру: іменна_частина@домен.зона.
+// іменна_частина: Це може бути будь-яка кількість літер, цифр, крапок (.) або тире (-). Ти вже знаєш, як позначати "один або більше" символів.
+// @: Це фіксований символ.
+// домен.зона: Тут також можуть бути літери, цифри, тире та крапки. Особливу увагу зверни на крапку: у регулярних виразах вона має спеціальне значення, тому її потрібно "екранувати" (захистити) за допомогою зворотного слеша (\).
+// Щоб знайти всі збіги, а не тільки перший, тобі знадобиться спеціальний прапорець g (від "global") після регулярного виразу. А також метод match() для рядка.
+
+
+
+// /**
+//  * Знаходить всі електронні адреси у тексті.
+//  * @param {string} text - Текст для пошуку.
+//  * @returns {Array<string>} Масив знайдених електронних адрес.
+//  */
+// function findEmails(text) {
+
+//     const emailRegex = /[^\s@]+@[^\s@]+\.[^\s@]+/g;
+//     const matches = text.match(emailRegex);
+//     console.log(emailRegex.test(text));
+
+//     return matches;
+// }
+
+// const longText = `
+// Привіт! Зв'яжіться з нами за адресою info@example.com або my.name@sub-domain.co.uk. 
+// Якщо виникнуть питання, пишіть на support@example.org. 
+// Також ми використовуємо admin@company.net для адміністративних потреб.
+// Додаткова інформація доступна на сайті, а також за адресою test@testcom.
+// `;
+
+// const foundEmails = findEmails(longText);
+
+// if (foundEmails) {
+//   console.log("Знайдені електронні адреси:");
+//   foundEmails.forEach(email => console.log(email));
+// } else {
+//   console.log("Електронні адреси не знайдено.");
+// }
+
+
+
+
+
+
+// Завдання 15:
+// Напиши функцію generateEmailMessage, яка приймає масив об'єктів. Кожен об'єкт представляє одного співробітника та містить таку інформацію:
+// firstName (рядок)
+// lastName (рядок)
+// department (рядок)
+// salary (число)
+// Функція повинна повернути новий масив, де кожен елемент — це рядок, що є готовим повідомленням для співробітника.
+// Формат повідомлення:
+// "Вітаємо, [Ім'я] [Прізвище]! Ваша нова зарплата на посаді у відділі [Відділ] становить $[Зарплата]. З найкращими побажаннями, HR-відділ."
+// Деталі та підказки
+// Для початку, тобі потрібно буде пройтися по масиву об'єктів.
+// Зверни увагу на те, як отримати доступ до значень всередині кожного об'єкта.
+// Для створення повідомлення тобі знадобиться шаблонний рядок (template literal).
+
+// const employees = [
+//     {
+//         firstName: 'Anna',
+//         lastName : 'Makar',
+//         department: 'sales',
+//         salary: 15000.00
+//     },
+//     {
+//         firstName: 'Maryna',
+//         lastName : 'Kruk',
+//         department: 'advertisement',
+//         salary: 13000.00
+//     },
+//     {
+//         firstName: 'Vasya',
+//         lastName : 'Petryk',
+//         department: 'front-office',
+//         salary: 17000.00
+//     }
+// ];
+
+// /**
+//  * Generates messages from data got from array
+//  * @param {Array} arr - Array of objects with data to generate message
+//  * @returns {Array} Array of text-messages
+//  */
+// function generateEmailMessage(arr) {
+//     const messages = arr.reduce((acc, employee) => {
+//         if(employee) {
+//             acc.push(`Вітаємо, ${employee.firstName} ${employee.lastName}! Ваша нова зарплата на посаді у відділі ${employee.department.charAt(0).toUpperCase() + employee.department.slice(1)} становить ${employee.salary.toFixed(2)}. З найкращими побажаннями, HR-відділ. `)
+//         }
+//         return acc;
+//     }, [])
+//     return messages;
+// }
+
+// console.log(generateEmailMessage(employees));
+
+
+
+
+
+// Завдання 16
+// Уявімо, що наша компанія розширюється, і нам потрібно об'єднати дані з двох різних джерел.
+// Твоє завдання — написати функцію mergeAndProcessData, яка приймає два масиви:
+// Масив employees: Містить об'єкти з інформацією про співробітників, але без даних про їхні відділи та зарплату. Кожен об'єкт має такі властивості: id (унікальний ідентифікатор), firstName та lastName.
+// Масив salaries: Містить об'єкти, що пов'язують ідентифікатор співробітника (id) з його зарплатою та відділом. Кожен об'єкт має такі властивості: id, department та salary.
+// Функція повинна повернути новий масив об'єктів, де кожен об'єкт містить повну інформацію про співробітника, об'єднану з обох масивів.
+// Формат вихідного об'єкта:
+// {
+//     id: 1,
+//     firstName: 'Anna',
+//     lastName: 'Makar',
+//     department: 'sales',
+//     salary: 15000
+// }
+// Деталі та підказки
+// Для цього завдання тобі знадобиться пройтися по одному з масивів (наприклад, по employees).
+// Для кожного співробітника з першого масиву тобі потрібно буде знайти відповідні дані в другому масиві, використовуючи спільний id.
+// Після цього, ти маєш створити новий об'єкт, який поєднає всю інформацію.
+// Зверни увагу, що порядок елементів у вихідному масиві не має значення.
+
+// const employees = [
+//     {
+//         id: 101,
+//         firstName: 'Anna',
+//         lastName : 'Makar',
+
+//     },
+//     {
+//         id: 102,
+//         firstName: 'Maryna',
+//         lastName : 'Kruk',
+
+//     },
+//     {
+//         id: 103,
+//         firstName: 'Vasya',
+//         lastName : 'Petryk',
+
+//     },
+//     {
+//         id: 105,
+//         firstName: 'Olena',
+//         lastName: 'Tsupko'
+//     }
+// ];
+
+// const salaries = [
+//     {
+//         id: 101,
+//         department: 'sales',
+//         salary: 15000.00
+//     },
+//     {
+//         id: 102,
+//         department: 'advertisement',
+//         salary: 13000.00
+//     },
+//     {
+//         id: 103,
+//         department: 'front-office',
+//         salary: 17000.00
+//     },
+//     {
+//         id: 104,
+//         department: 'back-office',
+//         salary: 19000.00
+//     }
+// ];
+
+
+// // /**
+// //  * Merges data of two Arrays of objects 
+// //  * @param {Array} obj1 - Aray of objects
+// //  * @param {Array} obj2 - Array of objects
+// //  * @returns {Array} Array of merged objects
+// //  */
+// // function mergeAndProcessData(employees, salaries) {
+// // // debugger;
+
+// //     return employees.reduce((acc, employee) => {
+// //         // Для кожного співробітника знаходимо відповідний об'єкт зарплати за id.
+// //         const salaryData = salaries.find(salary => salary.id === employee.id);
+
+// //         if (salaryData) {
+// //             // ...створюємо новий об'єкт, який об'єднує дані з обох джерел
+// //             // за допомогою оператора розгортання (...), властивості які вже існують просо перезапишуться.
+// //             const mergedObject = {
+// //                 ...employee,
+// //                 ...salaryData
+// //             }
+// //             // Додаємо об'єднаний об'єкт до акумулятора.
+// //             acc.push(mergedObject);
+// //         }
+// //         // Повертаємо акумулятор для наступної ітерації.
+// //         return acc;
+// //     }, [])
+
+// // }
+
+// // console.log(mergeAndProcessData(employees, salaries));
+
+
+// /**
+//  * Merges data of two Arrays of objects 
+//  * @param {Array} obj1 - Aray of objects
+//  * @param {Array} obj2 - Array of objects
+//  * @returns {Array} Array of merged objects
+//  */
+// function mergeAndProcessData(employees, salaries) {
+
+//     // return employees.map(employee => {
+
+//     //     const salaryData = salaries.find(salary => salary.id === employee.id);
+
+//     //     if(salaryData) {
+//     //         return {
+//     //             ...employee,
+//     //             ...salaryData
+//     //         }
+//     //     }
+
+//     // })
+
+
+//     // // Покращений варіант з використанням flatMap замість map
+//     // // Використовуємо flatMap(), щоб створити новий масив з об'єднаних об'єктів.
+//     // // Якщо об'єкт salaryData не знайдено, flatMap проігнорує undefined.
+//     // return employees.flatMap(employee => {
+//     //     const salaryData = salaries.find(salary => salary.id === employee.id);
+
+//     //     // Якщо salaryData знайдено, повертаємо масив, що містить об'єднаний об'єкт.
+//     //     // Якщо ні, повертаємо порожній масив [].
+//     //     // flatMap автоматично "вирівнює" ці масиви в один.
+//     //     return salaryData ? [{ ...employee, ...salaryData }] : [];
+//     // });
+
+
+//     // Ще більш продвинуте рішення щоб не ітерувати масив 1000 раз в пошаку кожного індекса це зберегти дані в обєкт index: object
+//       // 1. Створення індексу для масиву salaries для швидкого доступу.
+//       // Використовуємо метод reduce(), щоб перетворити масив у об'єкт.
+//       const salariesIndex = salaries.reduce((index, salary) => {
+//         index[salary.id] = salary;
+//         return index;
+//       }, {});
+
+//         // 2. Ітерація по масиву employees і об'єднання даних.
+//         // Використовуємо map() для створення нового масиву.
+//         return employees.map(employee => {
+//             // Швидкий пошук за id через створений індекс.
+//             const salaryData = salariesIndex[employee.id];
+//             // Якщо ми знайшли відповідні дані...
+//             if (salaryData) {
+//                 // ...об'єднуємо їх у новий об'єкт.
+//                 return {
+//                     ...employee,
+//                     ...salaryData
+//                 };
+//             }
+//             // Якщо дані не знайдені, повертаємо початковий об'єкт employee,
+//             // або null/undefined, якщо це потрібно за логікою.
+//             return employee;
+//         })
+
+// }
+
+// // написати функцію, яка знаходить всі заплати, у яких немає даних про співробітників
+
+// /**
+//  * Знаходить об'єкти зарплат, які не мають відповідного співробітника.
+//  * @param {Array<Object>} employees - Масив об'єктів співробітників.
+//  * @param {Array<Object>} salaries - Масив об'єктів зарплат.
+//  * @returns {Array<Object>} Масив об'єктів, які не мають пари.
+//  */
+// function findUnmatchedSalaries(employees, salaries) {
+//   // 1. Створюємо індекс для масиву employees для швидкого пошуку.
+//   const employeesIndex = employees.reduce((index, employee) => {
+//     index[employee.id] = employee;
+//     return index;
+//   }, {});
+
+//   // 2. Використовуємо filter(), щоб знайти об'єкти, що не мають пари.
+//   return salaries.filter(salary => {
+//     // Перевіряємо, чи існує ключ salary.id в нашому індексі.
+//     // Якщо його немає (тобто !employeesIndex[salary.id]),
+//     // то цей об'єкт залишається в новому масиві.
+//     return !employeesIndex[salary.id];
+//   });
+// }
+
+// const unmatchedSalaries = findUnmatchedSalaries(employees, salaries);
+// console.log(unmatchedSalaries);
+
+
+// //  написати функцію, яка знаходить всіх співробітників, у яких немає даних про зарплату? Це буде схоже на щойно написаний нами код.
+// /**
+//  * Знаходить об'єкти співробітників, які не мають відповідної зарплати.
+//  * @param {Array<Object>} employees - Масив об'єктів співробітників.
+//  * @param {Array<Object>} salaries - Масив об'єктів зарплат.
+//  * @returns {Array<Object>} Масив об'єктів, які не мають пари.
+//  */
+// function findUnmatchedEmployees(employees, salaries) {
+//   // 1. Створюємо індекс для масиву employees для швидкого пошуку.
+//   const salariesIndex = salaries.reduce((index, salary) => {
+//     index[salary.id] = salary;
+//     return index;
+//   }, {});
+
+//   // 2. Використовуємо filter(), щоб знайти об'єкти, що не мають пари.
+//   return employees.filter(employee => {
+//     // Перевіряємо, чи існує ключ salary.id в нашому індексі.
+//     // Якщо його немає (тобто !employeesIndex[salary.id]),
+//     // то цей об'єкт залишається в новому масиві.
+//     return !salariesIndex[employee.id];
+//   });
+// }
+// const unmatchedEmployees = findUnmatchedEmployees(employees, salaries);
+// console.log(unmatchedEmployees);
+
+// console.log(mergeAndProcessData(employees, salaries));
+
+
+
+// Завдання 16: Облік товарів у магазині
+// У тебе є масив об'єктів products, який містить інформацію про різні товари. Кожен об'єкт має таку структуру:
+// name (рядок): назва товару.
+// price (число): ціна товару.
+// tags (масив рядків): список тегів, які описують товар (наприклад, ['електроніка', 'гаджети']).
+// Твоє завдання:
+// Напиши функцію calculateTotalPriceByTag(products, tag), яка:
+// Приймає два аргументи: масив products та рядок tag.
+// Проходить по всьому масиву products.
+// Знаходить усі товари, які мають вказаний тег у своєму масиві tags.
+// Підраховує та повертає загальну суму цін знайдених товарів.
+// Якщо жоден товар не відповідає тегу, функція має повернути 0.
+// Початкові дані для тестування:
+// const products = [
+//   { name: 'Ноутбук', price: 25000, tags: ['електроніка', 'гаджети'] },
+//   { name: 'Кавоварка', price: 5000, tags: ['побутова техніка', 'кухня'] },
+//   { name: 'Смартфон', price: 15000, tags: ['електроніка', 'мобільні'] },
+//   { name: 'Навушники', price: 1500, tags: ['електроніка', 'аксесуари'] },
+//   { name: 'Мікрохвильовка', price: 8000, tags: ['побутова техніка', 'кухня'] },
+//   { name: 'Клавіатура', price: 2000, tags: ['аксесуари'] }
+// ];
+
+
+const products = [
+  { name: 'Ноутбук', price: 25000, tags: ['електроніка', 'гаджети'] },
+  { name: 'Кавоварка', price: 5000, tags: ['побутова техніка', 'кухня'] },
+  { name: 'Смартфон', price: 15000, tags: ['електроніка', 'мобільні'] },
+  { name: 'Навушники', price: 1500, tags: ['електроніка', 'аксесуари'] },
+  { name: 'Мікрохвильовка', price: 8000, tags: ['побутова техніка', 'кухня'] },
+  { name: 'Клавіатура', price: 2000, tags: ['аксесуари'] }
+];
+
+
+// function calculateTotalPriceByTag(products, tag) {
+
+//     return products.reduce((sum, product) => {
+//         return product.tags.includes(tag) ? sum += product.price : sum;
+
+//     }, 0)
+// }
+
+// console.log(calculateTotalPriceByTag(products, 'ванна'));
+
+
+// **Наступне завдання 17: Форматування даних**
+// Давай попрацюємо зі рядками. Твоє завдання — перетворити масив об'єктів з попереднього завдання в єдиний, 
+// відформатований рядок, який можна було б вивести в консоль або на сторінку.
+// **Твоє завдання:**
+// Напиши функцію `formatProductList(products)`, яка:
+// 1.  Приймає один аргумент: масив `products` з попереднього завдання.
+// 2.  Використовуючи методи масивів та рядків, створює єдиний рядок, який містить інформацію про кожен товар.
+// 3.  Кожен товар має бути на новому рядку.
+// 4.  Формат для кожного товару має бути таким:
+//     `Назва: [name] | Ціна: [price] грн | Теги: [tags_list]`
+// 5.  Теги в `[tags_list]` мають бути розділені комою та пробілом.
+// ---
+// **Приклад очікуваного результату:**
+// ```
+// Назва: Ноутбук | Ціна: 25000 грн | Теги: електроніка, гаджети
+// Назва: Кавоварка | Ціна: 5000 грн | Теги: побутова техніка, кухня
+// Назва: Смартфон | Ціна: 15000 грн | Теги: електроніка, мобільні
+// Назва: Навушники | Ціна: 1500 грн | Теги: електроніка, аксесуари
+// Назва: Мікрохвильовка | Ціна: 8000 грн | Теги: побутова техніка, кухня
+// Назва: Клавіатура | Ціна: 2000 грн | Теги: аксесуари
+
+
+// function formatProductList(products) {
+//     const formattedArray = products.map(product => {
+//         const tagsString = product.tags.join(', ');
+//         const formattedPrice = product.price.toFixed(2);
+//         return `Назва: ${product.name} | Ціна: ${formattedPrice} грн | Теги: ${tagsString}`;
+//     })
+
+//     return formattedArray.join('\n');
+
+// }
+
+// const formattedOutput = formatProductList(products);
+// console.log(formattedOutput);
+
+
+// **Наступне завдання 18: Аналіз тегів**
+// Давай попрацюємо з об'єктами. Твоє завдання — створити об'єкт, який буде містити інформацію про кількість товарів для кожного тегу.
+// **Твоє завдання:**
+// Напиши функцію `countTags(products)`, яка:
+// 1.  Приймає один аргумент: масив `products` з попереднього завдання.
+// 2.  Створює новий порожній об'єкт.
+// 3.  Проходить по всьому масиву `products`.
+// 4.  Для кожного товару проходить по його масиву `tags`.
+// 5.  Якщо тег вже існує в об'єкті, збільшує його лічильник на **1**.
+// 6.  Якщо тег ще не існує, додає його в об'єкт з лічильником **1**.
+// 7.  Повертає фінальний об'єкт з кількістю товарів для кожного тегу.
+// **Приклад очікуваного результату:**
+// {
+//   'електроніка': 3,
+//   'гаджети': 1,
+//   'побутова техніка': 2,
+//   'кухня': 2,
+//   'мобільні': 1,
+//   'аксесуари': 2
+// }
+
+
+
+// function countTags(products) {
+
+//     return products.reduce((tagsAmount, product) => {
+
+//             product.tags.forEach(tag => {
+//                 tagsAmount[tag] = tagsAmount[tag] ? tagsAmount[tag] += 1 : 1;
+//             })
+
+//         return tagsAmount;
+//     }, {})
+// }
+
+
+// const countedTags = countTags(products);
+// console.log(countedTags);
+
+
+
+// Наступне завдання 19: Фільтрування та сортування
+// Тепер, коли ми вміємо працювати з даними, давай їх відфільтруємо та відсортуємо.
+// Твоє завдання:
+// Напиши функцію filterAndSort(products, maxPrice, sortBy), яка:
+// Приймає три аргументи:
+// products: масив товарів (з попередніх завдань).
+// maxPrice: максимальна ціна, за якою потрібно відфільтрувати товари.
+// sortBy: рядок 'price' або 'name', за яким потрібно відсортувати відфільтровані товари.
+// Спочатку фільтрує масив, залишаючи тільки ті товари, ціна яких менша або дорівнює maxPrice.
+// Потім сортує відфільтрований масив за вказаним параметром sortBy.
+// Якщо sortBy дорівнює 'price', сортувати від найдешевшого до найдорожчого.
+// Якщо sortBy дорівнює 'name', сортувати за назвою в алфавітному порядку.
+// Повертає новий, відфільтрований та відсортований масив.
+// debugger;
+
+
+// function filterAndSort(products, maxPrice, sortBy) {
+
+//     const productsMaxPrice = products.filter( product => product.price <= maxPrice);
+
+//     const sortedProducts = productsMaxPrice.toSorted((a,b) => {
+//         if(a[sortBy] > b[sortBy]) {
+//             return 1;
+//         } else if(a[sortBy] < b[sortBy]) {
+//             return -1;
+//         } else {
+//             return 0;
+//         }
+//     });
+//     return sortedProducts;
+// }
+
+// const sortedAndFiltered = filterAndSort(products, 12000, 'name');
+// console.log(sortedAndFiltered);
+
+
+// Твоє завдання 20:
+// Напиши функцію groupAndSummarize(products). Ця функція повинна:
+// Приймати один аргумент: products, масив товарів.
+// Використовуючи reduce, вона повинна згрупувати товари за їхнім першим тегом.
+// Для кожної групи (тегу), вона повинна повернути об'єкт з такими властивостями:
+// count: загальна кількість товарів у цій групі.
+// totalPrice: загальна ціна всіх товарів у цій групі.
+// Повернути кінцевий об'єкт, де ключі — це теги, а значення — об'єкти з підсумковими даними.
+
+
+// function groupAndSummarize(products) {
+
+//     return products.reduce((group, curr) => {
+//         // debugger;
+//         if(group.hasOwnProperty(curr.tags[0])) {
+//             group[curr.tags[0]].count += 1;
+//             group[curr.tags[0]].totalPrice += curr.price;
+//         } else {
+//             group[curr.tags[0]] = {count: 1, totalPrice: curr.price};
+//         }
+
+//         return group;
+        
+//     }, {})
+
+// }
+
+// const groupedAndSummarized = groupAndSummarize(products);
+// console.log(groupedAndSummarized);
+
+
+
+// Наступне завдання 21
+// Давай спробуємо інше завдання, яке допоможе закріпити навички роботи з масивами.
+// Твоє завдання:
+// Напиши функцію findUniqueTags(products). Ця функція повинна:
+// Приймати один аргумент: products, масив товарів.
+// Використовуючи методи масивів (наприклад, map, flat, reduce, filter або Set), знайти усі унікальні теги з усіх товарів у масиві products.
+// Повернути новий масив, який містить лише унікальні теги, без повторень.
+
+// function findUniqueTags(products) {
+// // debugger;
+
+//   const flattenedProducts = products.map(product => {
+    
+//     const getTags = product.tags.reduce((acc, curr) => {
+//       if (curr) {
+//         acc.push(curr);
+//       }
+//       return acc;
+//     }, []);
+
+//     return getTags;
+//   }).flat();
+
+//   const productsUniqueTags = Array.from(new Set(flattenedProducts))
+
+//   return productsUniqueTags;
+  
+// }
+
+// const foundUniqueTags = findUniqueTags(products);
+// console.log(foundUniqueTags);
+
+
+// /**
+//  * Варіант 1: Використання reduce()
+//  * @param {Array<Object>} products - Масив об'єктів товарів.
+//  * @returns {Array<string>} Масив унікальних тегів.
+//  */
+// function findUniqueTags1(products) {
+//     // 1. Використовуємо reduce() для зведення всіх тегів в один масив.
+//     const allTags = products.reduce((accumulator, currentProduct) => {
+//         return accumulator.concat(currentProduct.tags);
+//     }, []); // Початкове значення - порожній масив.
+
+//     // 2. Створюємо Set з масиву, щоб отримати унікальні значення.
+//     const uniqueTagsSet = new Set(allTags);
+
+//     // 3. Перетворюємо Set назад у масив.
+//     return Array.from(uniqueTagsSet);
+// }
+
+
+
+// Варіант 2: Використання map() та flat() - ще більш лаконічний
+// function findUniqueTags2(products) {
+//     // 1. Збираємо всі теги в один масив.
+//     const allTags = products.map(product => product.tags).flat();
+    
+//     // 2. Створюємо та повертаємо масив з унікальних значень.
+//     return [...new Set(allTags)];
+// }
+
+
+// const foundUniqueTags1 = findUniqueTags(products);
+// console.log('Унікальні теги (Варіант 1):', foundUniqueTags);
+// const foundUniqueTags2 = findUniqueTags2(products);
+// console.log('Унікальні теги (Варіант 2):', foundUniqueTags2);
+
+
+
+
+
+// Наступне завдання 21: Узагальнення даних
+// Ми навчилися працювати з масивами, але тепер давай спробуємо створити функцію, яка узагальнює дані про всі товари.
+// Твоє завдання:
+// Напиши функцію getStoreSummary(products), яка:
+// Приймає один аргумент: products, масив товарів.
+// Повертає новий об'єкт, що містить такі підсумкові дані про всі товари:
+// totalProducts: загальна кількість товарів.
+// totalPrice: загальна вартість усіх товарів.
+// averagePrice: середня ціна одного товару (округлена до двох знаків після коми).
+// uniqueTags: масив усіх унікальних тегів (використай свою функцію з попереднього завдання!).
+
+
+// function getStoreSummary(products) {
+
+//   const totalPr = +products.reduce((accum, currProduct) => {
+//     accum += currProduct.price;
+//     return accum;
+//   }, 0).toFixed(2);
+
+//   const avaragePr = +(totalPr / products.length).toFixed(2);
+
+//   const uniqueT = Array.from(new Set(products.map(product => product.tags).flat())); 
+
+//   return {
+//     totalProducts: products.length,
+//     totalPrice: totalPr,
+//     avaragePrice: avaragePr,
+//     uniqueTags: uniqueT
+//   }
+
+// }
+
+// const storeSummary = getStoreSummary(products);
+// console.log(storeSummary);
+
+
+
+// //Ще один спосіб щоб лише один раз перебарти вхідний масив і зібрати за один раз всі необхідні дані
+// /**
+//  * Повертає зведену інформацію про товари в магазині.
+//  * @param {Array<Object>} products - Масив об'єктів товарів.
+//  * @returns {Object} Об'єкт з підсумковими даними.
+//  */
+// function getStoreSummary(products) {
+//     // Використовуємо reduce для зведення всіх даних за один прохід.
+//     const summary = products.reduce((acc, product) => {
+//         // Збираємо загальну ціну.
+//         acc.totalPrice += product.price;
+
+//         // Збираємо всі теги у Set, щоб отримати унікальні.
+//         product.tags.forEach(tag => acc.uniqueTags.add(tag));
+
+//         return acc;
+//     }, {
+//         // Початкові значення
+//         totalPrice: 0,
+//         uniqueTags: new Set()
+//     });
+
+//     const totalProducts = products.length;
+//     const averagePrice = totalProducts > 0 ? parseFloat((summary.totalPrice / totalProducts).toFixed(2)) : 0;
+
+//     return {
+//         totalProducts: totalProducts,
+//         totalPrice: parseFloat(summary.totalPrice.toFixed(2)),
+//         averagePrice: averagePrice,
+//         uniqueTags: Array.from(summary.uniqueTags)
+//     };
+// }
+
+// const storeSummary = getStoreSummary(products);
+// console.log(storeSummary);
+
+
+
+
+
+// --------------------------------------------------------------------------------------------------------------------------------
+
+// Завдання
+// Уяви, що ти розробляєш програму для аналізу тексту.
+//  Твоє завдання — написати функцію, яка приймає рядок тексту і повертає об'єкт зі статистикою по ньому.
+// Цей об'єкт повинен містити таку інформацію:
+// Загальна кількість слів: порахувати, скільки слів у тексті.
+// Унікальні слова: масив, що містить тільки унікальні слова (без дублікатів).
+// Частота слів: об'єкт, де ключами є слова, а значеннями — кількість їхніх повторень у тексті.
+// Покроковий план
+// Створи функцію, яка приймає один аргумент — text.
+// Спочатку тобі потрібно перетворити рядок у масив слів. Подумай, який метод рядків тобі допоможе.
+// Очисти слова від знаків пунктуації (коми, крапки, знаки оклику тощо) і перетвори їх у нижній регістр, 
+// щоб Слово та слово вважалися одним і тим же словом.
+// Створи об'єкт для зберігання результатів.
+// Пройдись по масиву слів, заповнюючи статистику.
+// Поверни готовий об'єкт.
+
+
+
+
