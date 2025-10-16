@@ -6029,3 +6029,92 @@
 
 // console.log(userEmail);
 // console.log(secondaryRole);
+
+
+
+
+// -------------------------------------------------------------------------------------------------------------------------
+
+
+
+// 1. Перебір Власних Ключів (for...in та Безпека)
+// Об'єкт:
+// function User() {
+//     this.name = 'Олександр';
+//     this.role = 'Frontend';
+// }
+// User.prototype.sayHello = function() {
+//     return `Привіт, я ${this.name}`;
+// };
+// const alex = new User();
+
+// // Додамо невласну, але перелічувану властивість (приклад лише для демонстрації, так робити не варто)
+// Object.prototype.globalProperty = 'GLOBAL'; 
+// Завдання:
+// Створіть цикл for...in для об'єкта alex.
+// Використовуйте hasOwnProperty() всередині циклу, щоб вивести лише ті ключі, які належать самому об'єкту alex (тобто name та role).
+// Виведіть у консоль, які ключі були виведені, а які — проігноровані.
+
+// for(let key in alex) {
+//     if (alex.hasOwnProperty(key)) {
+//         console.log(`Own property [${key}] = value ${alex[key]}`);
+//     } else {
+//         console.log(`Inherited property [${key}] = value ${alex[key]}`);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+// 2. Сучасні Методи Перебору (Чиста Ітерація)
+// Використовуйте той самий об'єкт alex.
+// Завдання:
+// Використовуйте Object.keys() для отримання масиву всіх власних перелічуваних ключів.
+// Використовуйте Object.entries() для отримання масиву пар [ключ, значення].
+// На основі результату Object.entries(), використайте метод масиву (forEach або for...of), 
+// щоб вивести кожну пару у форматі: Ключ: name, Значення: Олександр.
+
+
+// const alexKeys = Object.keys(alex);
+// const alexEntries = Object.entries(alex);
+
+// alexEntries.forEach(pair => console.log(`Ключ: ${pair[0]}, Значення: ${pair[1]}`))
+
+
+
+
+
+
+
+
+// 3. Робота з Неперелічуваними Властивостями (enumerable: false)
+// Створіть об'єкт конфігурації. Вам потрібно додати до нього прихований ключ, який не повинен з'являтися у звичайних звітах.
+// Об'єкт:
+// const config = {
+//     version: '1.0',
+//     mode: 'production'
+// };
+// Завдання:
+// Використовуйте Object.defineProperty() для додавання до config властивості apiKey зі значенням 'SecretXYZ123'.
+// Встановіть для цієї властивості атрибут enumerable: false.
+// Виконайте перебір об'єкта config за допомогою Object.keys().
+// Виконайте перебір об'єкта config за допомогою Object.getOwnPropertyNames().
+// Виведіть обидва результати в консоль і поясніть, чому вони відрізняються.
+
+// Object.defineProperty(config, 'apiKey', {
+//      value: 'SecretXYZ123',
+//      enumerable: false
+// });
+
+// const configKeys = Object.keys(config);
+// const configPropertyNames = Object.getOwnPropertyNames(config);
+// console.log(configKeys);
+// console.log(configPropertyNames);
+
+// Вони відрізняються, тому що Object.keys() перебирає власні перелічувані властивості, а Object.getOwnProperty() перебирає власні перелічувані і не перелічувані властивості.
+// Обидва перераховують non inherited властивості об'єкта, але перші враховують ті що мають прапоець enumerable:true, а другі ті що мають прапорці enumerable:false
