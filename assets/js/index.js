@@ -6118,3 +6118,617 @@
 
 // Вони відрізняються, тому що Object.keys() перебирає власні перелічувані властивості, а Object.getOwnProperty() перебирає власні перелічувані і не перелічувані властивості.
 // Обидва перераховують non inherited властивості об'єкта, але перші враховують ті що мають прапоець enumerable:true, а другі ті що мають прапорці enumerable:false
+
+
+
+// -------------------------------------------------------------------------------------------------------------------------------
+
+// 1. Створення Унікального Ключа (Symbol)
+// Об'єкт:
+// const user = {
+//     id: 1,
+//     name: 'Ірина',
+//     [Symbol('hidden_config')]: 'admin_details'
+// };
+// Завдання:
+// Створіть новий символ із описом 'debug_id' та збережіть його у змінній DEBUG_KEY.
+// Використовуйте цей символ DEBUG_KEY для додавання до об'єкта user властивості зі значенням '100-XYZ'.
+// Виконайте перебір об'єкта user за допомогою Object.keys() та виведіть результат.
+// Використовуйте Object.getOwnPropertySymbols() для вилучення всіх Symbol-ключів з об'єкта.
+// Виведіть Object.keys() та Object.getOwnPropertySymbols() у консоль і поясніть різницю.
+
+// const DEBUG_KEY = Symbol('debug_id');
+// user[DEBUG_KEY] = '100-XYZ';
+// console.log(Object.keys(user));
+// console.log(Object.getOwnPropertySymbols(user));
+
+// Object.keys() зібрав всі власні перелічувані властивості обєкта, Symbol сюди не потрапляє бо він непеелічуваний по замовчуванню
+//  Object.getOwnPropertySymbols() зібрав всі власні не успадкоані Symbol з обєкта (нещалежно від того що стоїть в прапорці enumerable)
+
+
+
+// 2. Ітерація за допомогою for...of
+// Колекції:
+// const userRoles = new Set(['editor', 'analyst', 'viewer']);
+// const userName = 'Marina';
+// Завдання:
+// Використовуйте цикл for...of для перебору елементів колекції userRoles (Set). Виведіть кожен елемент у консоль.
+// Використовуйте цикл for...of для перебору символів рядка userName. Виведіть кожен символ у консоль.
+// Поясніть, чому for...of працює з цими типами даних, тоді як for...in — ні.
+
+// for (let role of userRoles) {
+//     console.log(role);
+// }
+
+// for (let char of userName) {
+//     console.log(char);
+// }
+
+// Напевно тому, що for..in перебирає саме за властивостями а не за значеннями (нема властивостей - нема результату)
+// Ще може перебрати масив, трактуючи індекс як рядкову назву властивості!
+// а for...of перебирає за значеннями будь-які ітеровані колекції (ті що мають Symbol.iterator)
+
+
+
+
+// Завдання 14: Уникнення Конфлікту Ключів (Symbol)
+// Уявіть, що ваш об'єкт data використовується двома різними бібліотеками (LibA та LibB),
+//  які обидві хочуть додати службову властивість __version.
+// Заданий об'єкт:
+// const data = {
+//     id: 42,
+//     name: 'Report'
+// };
+// Завдання:
+// Створіть два унікальні символи: LIB_A_KEY з описом 'version' та LIB_B_KEY також з описом 'version'.
+// Додайте до об'єкта data властивість, використовуючи LIB_A_KEY зі значенням '1.0.0'.
+// Додайте до об'єкта data властивість, використовуючи LIB_B_KEY зі значенням '2.5.0'.
+// Виведіть у консоль, чи рівні ці два Symbol-ключі: LIB_A_KEY === LIB_B_KEY.
+// Виведіть у консоль, яке значення повертає Object.keys(data).
+
+
+// const LIB_A_KEY = Symbol('version');
+// const LIB_B_KEY = Symbol('version');
+// data[LIB_A_KEY] = '1.0.0';
+// data[LIB_B_KEY] = '2.5.0';
+// console.log(LIB_A_KEY === LIB_B_KEY);  // false
+// console.log(Object.keys(data));   // (2) ['id', 'name']
+
+
+
+
+
+// Завдання 15: Доступ до Сховища (Global Symbol Registry)
+// Іноді необхідно, щоб Symbol був унікальним у всій програмі, але його можна було отримати
+//  за рядковим ключем з глобального сховища (Registry).
+// Завдання:
+// Створіть Symbol у глобальному сховищі з ключем 'cache_id' та збережіть 
+// його у змінній CacheSymbol, використовуючи метод Symbol.for().
+// Використовуйте CacheSymbol для додавання до об'єкта database властивості зі значенням 12345.
+// Уявіть, що інша частина коду хоче отримати доступ до цього ж Symbol. 
+// Отримайте його знову з глобального сховища, використовуючи той самий ключ 'cache_id', 
+// і збережіть у змінній AnotherCacheSymbol.
+// Виведіть у консоль, чи рівні ці два Symbol-ключі: CacheSymbol === AnotherCacheSymbol.
+
+// const CacheSymbol = Symbol.for('cache_id');
+
+// const database = {};
+
+// database[CacheSymbol] = 12345;
+
+// const AnotherCacheSymbol = Symbol.for('cache_id');
+// console.log(AnotherCacheSymbol);
+// console.log(CacheSymbol);
+// console.log(CacheSymbol === AnotherCacheSymbol);
+
+
+
+
+
+
+// Завдання 16: Виявлення Всіх Типів Ключів
+// Створіть об'єкт, який має всі три можливі типи ключів, і виявіть їх усі.
+// Об'єкт:
+// const config = {
+//     method: 'GET',              // Рядковий ключ, enumerable: true
+//     url: '/api/data'
+// };
+// const SYMBOL_KEY = Symbol('config_hash');
+// Object.defineProperty(config, 'secretToken', { // Рядковий ключ, enumerable: false
+//     value: 'xyz',
+//     enumerable: false 
+// });
+// config[SYMBOL_KEY] = 'abc'; // Symbol-ключ, enumerable: false
+// Завдання:
+// Використовуйте Object.keys() для вилучення перелічуваних рядкових ключів.
+// Використовуйте Object.getOwnPropertyNames() для вилучення всіх рядкових ключів (включаючи secretToken).
+// Використовуйте Object.getOwnPropertySymbols() для вилучення Symbol-ключів.
+// Виведіть усі три результати в консоль.
+
+// console.log(Object.keys(config));   //['method', 'url']
+// console.log(Object.getOwnPropertyNames(config));   //['method', 'url', 'secretToken']
+// console.log(Object.getOwnPropertySymbols(config));   //[Symbol(config_hash)]
+// console.log(Object.getOwnPropertyDescriptor(config, SYMBOL_KEY));   //[Symbol(config_hash)]
+// console.log(config);
+
+
+
+
+
+
+// Завдання 17: Ітерація Map та Деструктуризація
+// Map є ітерованим об'єктом, який повертає пари [ключ, значення].
+// Колекція:
+// const userMap = new Map([
+//     ['id', 101],
+//     ['username', 'tester'],
+//     ['is_active', true]
+// ]);
+// Завдання:
+// Використовуйте цикл for...of для перебору колекції userMap.
+// У циклі використайте деструктуризацію масивів для отримання окремих змінних key та value з кожної пари.
+// Виведіть у консоль кожну пару у форматі: Ключ: username, Значення: tester.
+
+
+// userMap повертає пари [ключ, значення] - тут ми одразу деструктуруємо отриманий масив і зберігаємо їх в тимчасові змінні
+// тобто деструктуризація елемента Map відбувається на кожній ітерації
+// for (let [key, value] of userMap) {
+
+//     console.log(`Ключ: ${key}, Значення: ${value}`);
+
+// }
+
+
+
+
+
+// Завдання 18: Перетворення Ітерованих Об'єктів на Масиви
+// Ітеровані об'єкти легко перетворюються на масиви за допомогою оператора Spread (...).
+// Колекції:
+// const citiesSet = new Set(['Kyiv', 'Lviv', 'Odesa', 'Kharkiv']);
+// const numbersGenerator = (function* () {
+//     yield 10;
+//     yield 20;
+//     yield 30;
+// })();
+// Завдання:
+// Використовуйте оператор Spread (...) для перетворення citiesSet на масив citiesArray.
+// Використовуйте оператор Spread (...) для перетворення об'єкта-генератора numbersGenerator на масив numbersArray.
+// Виведіть обидва масиви в консоль.
+
+// const citiesArray = [...citiesSet];
+// const numbersArray = [...numbersGenerator];
+// console.log(citiesArray);
+// console.log(numbersArray);
+
+
+
+// Завдання 19: Створення Власного Ітерованого Об'єкта (Advanced)
+// Це найскладніше завдання, яке вимагає реалізації Протоколу Ітерації для звичайного об'єкта.
+// Об'єкт:
+// const userProfile = {
+//     name: 'Olena',
+//     age: 28,
+//     country: 'UA'
+// };
+// // Завдання:
+// // Додайте до об'єкта userProfile метод з ключем Symbol.iterator.
+// // Цей метод повинен повертати об'єкт Ітератор, який дозволить циклу for...of перебирати 
+// // лише значення властивостей name та age (у цьому порядку).
+// // Використовуйте цикл for...of для перебору userProfile та виведіть отримані значення у консоль.
+
+// // Створимо окремий масив ключів які нам потрібно перебирати(name, age) :
+// const ITERABLE_KEYS = ['name', 'age'];
+
+// userProfile[Symbol.iterator] = function () {
+//     // внутрішній стан ітератора
+//     let currentIndex = 0;  // починаємо з першого елемента в ITERABLE_KEYS - name
+//     const profile = this;  // зберігаємо посилання на обєкт userProfile
+
+//     return {
+//         // Обєкт ітератор
+//         next () {
+//             // визначаємо який ключ ми повинні взяти
+//             if (currentIndex < ITERABLE_KEYS.length) {
+
+//                 const key = ITERABLE_KEYS[currentIndex];  // зберігаємо за індексом з масиву ITERABLE_KEYS'name' потім 'age'
+//                 const value = profile[key];   // зберігаємо за ключем з обєкту profile 'Olena' потім 28
+
+//                 currentIndex++;  // переходимо до наступного ключа
+                
+//                 // Повертаємо поточне значення та done: false поки currentIndex < ITERABLE_KEYS.length
+//                 return {
+//                     value: value,
+//                     done: false
+//                 };
+//             } else {
+//                 // ітерація завершена
+//                 return {done: true};
+//             }
+//         }
+//     }
+// };
+
+// // ітеруємо обєкт за допомогою for...of за шаблоном ітерацій який ми створили вище
+// // тепер for...of буде проходитись лише по тим ключам які задані в масиві ITERABLE_KEYS
+// for (const data of userProfile) {
+//     console.log(data);  // Викликає userProfile[Symbol.iterator] і використовує next()
+// }
+
+// // можем ще перевірити роботу нашого ітератора вручну викликаючи сам ітератор і метод next() в середині нього
+
+// const manualIterator = userProfile[Symbol.iterator]();
+// console.log(manualIterator.next());  // {value: 'Olena', done: false}
+// console.log(manualIterator.next());  // {value: 28, done: false}
+// console.log(manualIterator.next());  // {done: true}
+
+
+
+
+// Завдання 20: Створення Ітератора Діапазону (Range Iterator)
+// Вам необхідно створити об'єкт, який визначає числовий діапазон (start, end, step), і зробити його ітерованим.
+// Головна вимога: Ітератор не повинен створювати масив усіх чисел одразу, а має ліниво генерувати їх при кожному виклику next().
+// Заданий об'єкт:
+// const range = {
+//     start: 2,
+//     end: 11,
+//     step: 3
+// };
+// Завдання:
+// Реалізуйте метод range[Symbol.iterator] на об'єкті range.
+// Усередині функції Symbol.iterator створіть змінну стану current, ініціалізувавши її значенням this.start.
+// Реалізуйте метод next() таким чином, щоб він:
+// Повертав поточне значення current у полі value.
+// Збільшував current на this.step.
+// Встановлював done: true, коли current (після збільшення) перевищує this.end.
+// Використовуйте цикл for...of для перевірки результату.
+// Очікуваний Вивід (для перевірки логіки):
+// Цикл for...of має вивести:
+// (2): Початок.
+// (5): 2 + 3.
+// (8): 5 + 3.
+// (11): 8 + 3. (На цьому кроці current стає 14, що більше за end: 11, тому наступний крок має бути done: true).
+
+
+// const range = {
+//     start: 2,
+//     end: 11,
+//     step: 3
+// };
+
+// range[Symbol.iterator] = function() {
+//     let current = this.start;
+//     const last = this.end;
+//     const step = this.step;
+
+//     return {
+//         next() {
+//             // debugger;
+//             if (current <= last) {
+//                 const stepInCurr = current
+//                 current+=step;
+//                 return {
+//                     value: stepInCurr,
+//                     done: false
+//                 }
+//             } else {
+//                 return {
+//                     done: true
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// for(num of range) {
+//     console.log(num);
+// }
+
+
+
+
+// Завдання 21: Ітератор Об'єкта "Картка Користувача"
+// Створіть об'єкт userCard, який містить різні метадані. Ваше завдання — зробити цей об'єкт ітерованим,
+//  щоб цикл for...of перебирав його ключі у зворотному алфавітному порядку.
+// Заданий об'єкт:
+// const userCard = {
+//     age: 30,
+//     name: 'Dmytro',
+//     city: 'Kyiv',
+//     role: 'Admin'
+// };
+// Завдання:
+// Реалізуйте метод userCard[Symbol.iterator].
+// Усередині функції Symbol.iterator:
+// Використовуйте Object.keys() для отримання масиву всіх ключів об'єкта.
+// Відсортуйте цей масив ключів у зворотному алфавітному порядку (від Z до A).
+// Ініціалізуйте змінну стану currentIndex для відстеження позиції.
+// Реалізуйте метод next(), який повертатиме ключ на кожній ітерації.
+// Використовуйте цикл for...of для перевірки результату.
+// Очікуваний Вивід:
+// Цикл for...of має вивести:
+// role
+// name
+// city
+// age
+// Це дозволить вам поєднати знання про обробку об'єктів (Object.keys) та механізм ітераторів (Symbol.iterator). 
+
+
+// const userCard = {
+//     age: 30,
+//     name: 'Dmytro',
+//     city: 'Kyiv',
+//     role: 'Admin'
+// };
+
+// userCard[Symbol.iterator] = function() {
+
+//     const obj = this;
+//     const keysArr = Object.keys(this).sort().reverse();
+//     let currentIndex = 0;
+
+//     return {
+//         next() {
+//             if (currentIndex < keysArr.length) {
+
+//                 return {
+//                     value: keysArr[currentIndex++],
+//                     done: false
+//                 }
+//             } else {
+//                 return {
+//                     done: true
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// for (data of userCard) {
+//     console.log(data);
+// }
+
+
+
+// Завдання 22: Комбінований Ітератор Властивостей Об'єкта
+// Вам потрібно створити ітератор, який перебирає лише рядкові значення об'єкта projectData, 
+// але повертає їх у певному порядку: спочатку всі значення з масиву members, а потім значення status та owner.
+// Заданий об'єкт:
+// const projectData = {
+//     id: 10,
+//     status: 'Active',
+//     owner: 'Taras',
+//     members: ['Oksana', 'Pavlo', 'Natalia'],
+//     budget: 50000
+// };
+// Завдання:
+// Реалізуйте метод projectData[Symbol.iterator].
+// Усередині функції Symbol.iterator визначте фіксовану послідовність джерел даних, 
+// які потрібно перебрати: members, потім status, потім owner.
+// Ініціалізуйте два стани:
+// currentSourceIndex: Індекс у вашій послідовності джерел (0, 1, 2).
+// memberIterator: Збережіть ітератор масиву projectData.members (projectData.members[Symbol.iterator]()), 
+// оскільки це перше джерело, яке потрібно вичерпати.
+// Реалізуйте метод next(), який повинен:
+// Спочатку викликати memberIterator.next().
+// Якщо ітератор членів не завершений (done: false), повернути його результат.
+// Якщо ітератор членів завершений, перейти до наступних джерел (status, owner) і повернути їхні значення.
+// Після повернення owner, встановити done: true.
+// Очікуваний Вивід:
+// Цикл for...of має вивести:
+// Oksana
+// Pavlo
+// Natalia
+// Active
+// Taras
+
+
+
+// const projectData = {
+//     id: 10,
+//     status: 'Active',
+//     owner: 'Taras',
+//     members: ['Oksana', 'Pavlo', 'Natalia'],
+//     budget: 50000
+// };
+
+// projectData[Symbol.iterator] = function () {
+//     // зберігаєм стан поточного індекса для ітерації по dataKeys
+//     let currentSourceIndex = 0;
+//     // зберігаєм контекст - посилання на обєкт projectData
+//     const data = this;
+//     // зберігаємо інші рядкові змінні крім members 
+//     const dataKeys = ['status', 'owner'];
+//     // отримуєм доступ до вбудованого ітератора масива members щоб викликати його в методі next()
+//     const memberIterator = this.members[Symbol.iterator]();
+
+    
+//     return {
+//         next() {
+//             // debugger;
+//             // викликаємо вбудований ітератор масива members
+//             const memberResult = memberIterator.next()
+//             // якщо виклик ітератора повертає done:false повертаємо результат його виконання якщо done:true просто переходим до наступної перевірки
+//             if (!memberResult.done) {
+//                 return memberResult;
+//             }
+
+//             // якщо поточний індекс меше довжини масиву з залишками рядкових властивостей обєкту повертаєм значення властивості 
+//             // і переходим до наступного індексу
+//             if (currentSourceIndex < dataKeys.length) {
+//                 const key = dataKeys[currentSourceIndex++];
+//                 return {
+//                     value: data[key],
+//                     done: false
+//                 }
+//             }
+
+//             // коли пройшли всі перевірки(проітерували всі необхідні джерела даних) то тільки тоді завершуємо робоу ітератора 
+//             return {
+//                 done: true
+//             }
+//         }
+//     }
+// }
+
+// for (const data of projectData) {
+//     console.log(data);
+// }
+
+
+
+
+// Завдання 23: Порівняння Методів Збереження Контексту
+// Уявіть, що вам потрібно, щоб об'єкт logger мав метод start(), 
+// який запускає інший метод (logMessage) через деякий час. 
+// При цьому logMessage має коректно звертатися до внутрішньої властивості prefix.
+// Заданий об'єкт:
+// const logger = {
+//     prefix: 'LOG:',
+//     data: 'System initialized',
+
+//     logMessage: function() {
+//         // Ми хочемо, щоб 'this' тут посилався на 'logger'
+//         console.log(`${this.prefix} ${this.data}`);
+//     },
+
+//     start: function(callback) {
+//         // Ми запускаємо callback через 100 мс
+//         setTimeout(callback, 100)
+//     }
+// };
+// Завдання:
+// Виправте метод start двома різними способами, щоб при виклику logger.start(logger.logMessage) 
+// метод logMessage коректно вивів повідомлення (LOG: System initialized), а не undefined undefined.
+// Варіант A: Використання .bind()
+// Змініть logger.start так, щоб він використав .bind(this) перед передачею callback у setTimeout.
+// Варіант B: Використання Замикання (Сучасний JS)
+// Поверніть logger.start до початкового вигляду.
+// Створіть новий об'єкт loggerModern.
+// Замініть функцію start: function(...) на стрілкову функцію (start: (callback) => { ... }). Поясніть, чому це вирішує проблему.
+
+// варіант А
+// const logger = {
+//     prefix: 'LOG:',
+//     data: 'System initialized',
+
+//     logMessage: function() {
+//         // Ми хочемо, щоб 'this' тут посилався на 'logger'
+//         console.log(`${this.prefix} ${this.data}`);
+//     },
+
+//     start: function(callback) {
+//         // Ми запускаємо callback через 100 мс
+//         setTimeout(callback.bind(this), 100)
+//     }
+// };
+// console.log(logger.start(logger.logMessage));
+
+// варіант Б
+// const loggerModern = {
+//     prefix: 'LOG:',
+//     data: 'System initialized',
+
+//     logMessage: function() {
+//         // Ми хочемо, щоб 'this' тут посилався на 'logger'
+//         console.log(`${this.prefix} ${this.data}`);
+//     },
+
+//     start: (callback) => {return setTimeout(callback, 100)}
+
+// };
+
+// console.log(loggerModern.start(loggerModern.logMessage));   // повертатиметься undefined undefined 
+// тому що стрілкова функція не має власного контексту this і посилається на батьківську область видимості з місця де її викликають
+// оскільки ми викликаємо start в глобальній обасті видимості то this посилається на windows який немає this.prefix та this.data
+// тому повертає undefined
+
+// варіант В - правильний  викристовуючи замикання
+// const logger = {
+//     prefix: 'LOG:',
+//     data: 'System initialized',
+
+//     logMessage: function() {
+//         // Ми хочемо, щоб 'this' тут посилався на 'logger'
+//         console.log(`${this.prefix} ${this.data}`);
+//     },
+
+//     start: function() {
+//         const self = this;
+//         // Ми запускаємо callback через 100 мс
+//         setTimeout(function() {
+//             // ця фунцкія має доступ до self через замикання
+//             self.logMessage();
+//         }, 100)
+//     }
+// };
+// console.log(logger.start());
+
+
+
+// Завдання 24: Ітератор з Генерацією Послідовності (Індекс з 1)
+// Створіть об'єкт dataFeed, який містить масив елементів. Ваше завдання — зробити його ітерованим таким чином, 
+// щоб на кожній ітерації він повертав об'єкт, що містить не лише саме значення, але й номер його позиції, починаючи з 1.
+// Заданий об'єкт:
+// const dataFeed = {
+//     items: ['apple', 'banana', 'cherry', 'date'],
+//     [Symbol.iterator]: function() {
+//         // Тут буде ваша реалізація
+//     }
+// };
+// Завдання:
+// Реалізуйте метод dataFeed[Symbol.iterator].
+// Усередині функції Symbol.iterator визначте:
+// currentIndex: Починається з 0 (для доступу до масиву).
+// position: Починається з 1 (для виводу користувачеві).
+// items: Збережіть посилання на вихідний масив.
+// Реалізуйте метод next(), який повинен:
+// Перевіряти currentIndex на межі масиву.
+// Повертати об'єкт у форматі:
+// {
+//     value: { 
+//         index: [позиція, починаючи з 1], 
+//         item: [значення елемента] 
+//     }, 
+//     done: false 
+// }
+// Правильно збільшувати обидва лічильники (currentIndex та position) на кожному кроці.
+// Використовуйте цикл for...of для перевірки результату.
+// Очікуваний Вивід:
+// Цикл for...of має вивести:
+// { index: 1, item: 'apple' }
+// { index: 2, item: 'banana' }
+// { index: 3, item: 'cherry' }
+// { index: 4, item: 'date' }
+
+
+// const dataFeed = {
+//     items: ['apple', 'banana', 'cherry', 'date'],
+//     [Symbol.iterator]: function() {
+//         let currentIndex = 0;
+//         let position = 1;
+//         const items = this.items;
+
+//         return {
+//             next() {
+//                 if (currentIndex < items.length) {
+//                     return {
+//                         value: {
+//                             index: position++,
+//                             item: items[currentIndex++]
+//                         },
+//                         done: false
+//                     }
+//                 } else {
+//                     return {
+//                         done: true
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// };
+
+// for (let item of dataFeed) {
+//     console.log(item);
+// }
