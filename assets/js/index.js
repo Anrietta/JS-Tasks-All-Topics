@@ -6732,3 +6732,184 @@
 // for (let item of dataFeed) {
 //     console.log(item);
 // }
+
+
+// --------------------------------------------------------------------------------------------------------------------------
+
+
+// Завдання 25: Зберігання Складних Ключів та Чейнінг
+// Ви повинні створити Map, який використовує об'єкти та функції як ключі, і продемонструвати ефективність методу .set().
+// Задані об'єкти:
+// const user1 = { id: 101, name: 'Alice' };
+// const user2 = { id: 102, name: 'Bob' };
+// const logFunction = () => console.log('Log');
+// Завдання:
+// Створіть порожній Map під назвою cache.
+// Використовуючи чейн (.set().set()), додайте наступні пари:
+// Ключ: user1, Значення: 'admin'
+// Ключ: user2, Значення: 'guest'
+// Додайте третій елемент окремим викликом:
+// Ключ: logFunction, Значення: 'utility'
+// Виведіть у консоль:
+// Значення, пов'язане з user1 (використовуючи .get()).
+// Розмір cache (використовуючи .size).
+// Чи містить cache ключ, який є новим, але візуально ідентичним об'єктом { id: 101, name: 'Alice' } (використовуючи .has())?
+
+
+// const cache = new Map().set(user1, 'admin').set(user2, 'guest');
+// cache.set(logFunction, 'utility');
+  
+// console.log(cache.get(user1));  // admin
+// console.log(cache.size);   // 3
+
+// // Перевірка ідентичності (ключовий момент) - створимо ідентичний до user1 обєкт і переконаємось 
+// // що Map порівнює об'єкти та функції за посиланням (reference), а не за їхнім вмістом. 
+// const visualySameUser = { id: 101, name: 'Alice' };
+// console.log(cache.has(visualySameUser));  // false
+
+
+
+// Завдання 26: Ітерація, Обробка та Фільтрація Map
+// Ви повинні обробити наявний Map з даними про товари та виконати три різні види ітерації, 
+// демонструючи методи .keys(), .values() та .entries().
+// Заданий Map:
+// const inventory = new Map([
+//     ['laptop', 1200],
+//     ['monitor', 350],
+//     ['keyboard', 75],
+//     ['mouse', 30],
+//     ['webcam', 50]
+// ]);
+// Завдання:
+// Ітерація за Ключами (.keys()): Виведіть у консоль лише назви товарів (ключі).
+// Ітерація за Значеннями (.values()): Використовуючи цикл for...of, 
+// виведіть у консоль лише ціни товарів, які є вищими за 100.
+// Ітерація за Парами (.entries()): Використовуючи деструктуризацію масиву в циклі for...of, 
+// виведіть у консоль повне повідомлення: "Товар [назва] коштує [ціна]$".
+
+
+// console.log(inventory.keys());   // MapIterator {'laptop', 'monitor', 'keyboard', 'mouse', 'webcam'}
+
+// for (const value of inventory.values()) {
+//     if (value > 100) {
+//         console.log(value);
+//     }
+// }
+
+// for (const [name, price] of inventory.entries()) {
+
+//     console.log(`Товар ${name} коштує ${price}$`);
+// }
+
+
+
+
+// Завдання 27: Перетворення Map та Object
+// Вам надано два набори даних: Map із налаштуваннями та звичайний JavaScript-об'єкт із метаданими. 
+// Вам необхідно здійснити перетворення в обох напрямках.
+// Задані дані:
+// // 1. Об'єкт (джерело)
+// const userStatsObject = {
+//     visits: 45,
+//     lastLogin: '2024-10-20',
+//     isActive: true
+// };
+
+// // 2. Map (джерело)
+// const configMap = new Map([
+//     ['theme', 'dark'],
+//     ['notifications', true],
+//     ['timeout', 3000]
+// ]);
+// Завдання: 
+// Об'єкт -> Map: 
+// Перетворіть userStatsObject на новий Map під назвою userStatsMap.
+// Підказка: Використовуйте Object.entries() та конструктор Map.
+// Map -> Object: 
+// Перетворіть configMap на новий звичайний об'єкт під назвою configObject.
+// Підказка: Використовуйте оператор Spread (...) у поєднанні з Object.fromEntries().
+// Перевірка: Виведіть у консоль: 
+// userStatsMap.get('visits')
+// configObject.theme
+
+// const userStatsMap = new Map(Object.entries(userStatsObject));
+// console.log(userStatsMap);
+
+// const configObject = {...Object.fromEntries(configMap)};
+// console.log(configObject);
+
+// console.log(userStatsMap.get('visits'));
+// console.log(configObject.theme);
+
+
+
+
+// Завдання 28: Фільтрація та Маніпуляція Map
+// Вам надано Map, що містить деталі про завдання розробки з їхнім поточним статусом.
+// Заданий Map:
+// const tasks = new Map([
+//     ['Database Schema', { status: 'completed', priority: 'high', estimate: 8 }],
+//     ['User Auth Flow', { status: 'in progress', priority: 'high', estimate: 12 }],
+//     ['Styling Fixes', { status: 'completed', priority: 'low', estimate: 2 }],
+//     ['API Endpoints', { status: 'pending', priority: 'high', estimate: 10 }],
+//     ['Logging System', { status: 'in progress', priority: 'medium', estimate: 5 }]
+// ]);
+// Завдання:
+// Фільтрація та Видалення: Використовуючи цикл for...of та метод .delete(), 
+// видаліть із tasks усі завдання, які мають статус 'completed'.
+// Підказка: Вам потрібно ітерувати Map за допомогою .entries().
+// Маніпуляція: Використовуючи цикл for...of та метод .set(), підвищіть priority 
+// усіх завдань, які залишилися та мають priority: 'medium', на 'high'.
+// Перевірка: Виведіть у консоль:
+// Новий розмір tasks (після видалення).
+// Деталі завдання 'Logging System' (використовуючи .get()) для перевірки, що пріоритет змінився.
+
+
+// for (const [task, data] of tasks) {
+//     if (data.status === 'completed') {
+//         tasks.delete(task);
+//     }
+//     if (data.priority === 'medium') {
+//         // Створюємо НОВИЙ об'єкт, використовуючи оператор Spread
+//         const updatedData = {...data, priority: 'high'};
+//         // Зберігаємо новий об'єкт у Map
+//         tasks.set(task, updatedData);
+
+//     }
+// }
+// console.log(tasks.size);
+// console.log(tasks.get('Logging System'));
+
+// console.log(tasks);
+
+
+
+// Завдання 29: Інверсія Map з Фільтрацією та Новими Ключами
+// Вам надано Map, де ключі — це імена користувачів, а значення — їхні ID. 
+// Ваше завдання — інвертувати цей Map (зробити ID ключами, а імена — значеннями), 
+// але при цьому відфільтрувати лише користувачів, чий ID менше 300.
+// Заданий Map:
+// const userDataMap = new Map([
+//     ['Ivan', 450],
+//     ['Olena', 120],
+//     ['Taras', 550],
+//     ['Dmytro', 280],
+//     ['Kateryna', 90]
+// ]);
+// Завдання:
+// Фільтрація та Трансформація: Використовуючи ланцюжок методів ітерації, створіть масив пар [ID, Ім'я] 
+// (тобто інвертованих пар) лише для тих користувачів, чий ID менше 300.
+// Підказка: Почніть з userDataMap.entries().
+// Інверсія та Створення: Використовуйте отриманий масив пар для створення нового Map під назвою idToUserMap.
+// Перевірка: Виведіть у консоль:
+// Новий розмір idToUserMap.
+// Ім'я користувача з ID 280 (використовуючи .get()).
+
+
+
+// const idToUserMap = new Map([...userDataMap.entries()]
+//                                     .filter(item => item[1] < 300)
+//                                     .map(([name, id]) => [id, name])
+//                             );
+// console.log(idToUserMap.size);
+// console.log(idToUserMap.get(280));
