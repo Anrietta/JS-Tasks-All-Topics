@@ -6913,3 +6913,144 @@
 //                             );
 // console.log(idToUserMap.size);
 // console.log(idToUserMap.get(280));
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------
+
+
+// Завдання 30: Унікальність та Фільтрація
+// Вам надано масив з елементами, що повторюються. Ваше завдання — очистити його, використовуючи Set, і потім відфільтрувати результати.
+// Заданий масив:
+// const userRoles = [
+//     'admin', 
+//     'editor', 
+//     'guest', 
+//     'admin', 
+//     'manager', 
+//     'editor', 
+//     'guest'
+// ];
+// Завдання:
+// Очищення: Створіть Set під назвою uniqueRoles, передавши в конструктор userRoles для автоматичного видалення дублікатів.
+// Додавання Об'єкта: Додайте до uniqueRoles новий об'єкт: { group: 'special' }.
+// Перетворення та Фільтрація: Перетворіть uniqueRoles назад на звичайний масив під назвою finalRolesArray.
+// Підказка: Використовуйте оператор Spread (...) або Array.from().
+// Перевірка: Виведіть у консоль:
+// Розмір uniqueRoles (після всіх операцій).
+// finalRolesArray (повний масив).
+// Чи містить uniqueRoles рядок 'manager' (використовуючи .has())?
+
+// const uniqueRoles = new Set(userRoles);
+// uniqueRoles.add({group: 'special'});
+// const finalRolesArray = [...uniqueRoles];
+// console.log(uniqueRoles.size);
+// console.log(finalRolesArray);
+// console.log(uniqueRoles.has('manager'));
+
+
+
+
+// Завдання 31: Складні Значення та Операція Над Множинами
+// Вам надано два Set, що містять інформацію про права доступу користувачів. 
+// Перший Set містить стандартні дозволи, другий — дозволи адміністратора.
+// Задані Set:
+// Стандартні дозволи (рядки)
+// const standardPermissions = new Set(['read_posts', 'write_comments', 'view_profile']);
+// Права адміністратора (об'єкти як значення)
+// const adminPrivileges = new Set([
+//     { name: 'read_posts', level: 'full' },
+//     { name: 'delete_posts', level: 'full' },
+//     { name: 'manage_users', level: 'partial' }
+// ]);
+// Завдання:
+// Складні Значення: Створіть новий Set під назвою allPermissions. Додайте до нього всі елементи зі standardPermissions,
+//  а потім додайте ОДИН із об'єктів із adminPrivileges (наприклад, той, що має delete_posts).
+// Підказка: Використовуйте оператор Spread (...) для початкового заповнення.
+// Операція Над Множинами (Різниця): Створіть новий масив exclusiveAdminActions, який містить лише рядкові дозволи,
+//  які є у standardPermissions, але відсутні в іменах об'єктів у adminPrivileges.
+// Підказка: Вам потрібно перетворити adminPrivileges на масив імен, а потім відфільтрувати standardPermissions.
+// Очікуваний результат exclusiveAdminActions:
+// Масив повинен містити дозволи, які є стандартними, але не є частиною привілеїв адміністратора.
+
+
+// const allPermitions = new Set(standardPermissions);
+
+
+// const deletePostObj = Array.from(adminPrivileges).find(p => p.name === 'delete_posts');
+// allPermitions.add(deletePostObj);
+
+
+// const adminPrivilegesArr = [...adminPrivileges];
+// const exclusiveAdminActions = adminPrivilegesArr.filter(priv => { 
+//     return !standardPermissions.has(priv.name);
+// })
+// .map(priv => priv.name);
+
+// console.log(exclusiveAdminActions);
+
+
+
+
+// Завдання 32: Універсальний Трансформатор
+// Вам потрібно написати функцію, яка може приймати або Map, або Set, і повертати масив, 
+// придатний для подальшої обробки, використовуючи метод .entries().
+// Задані структури:
+// const projectMap = new Map([
+//     ['id', 1],
+//     ['status', 'Active']
+// ]);
+
+// const projectSet = new Set(['id', 'status']);
+// // Завдання:
+// // Напишіть функцію getEntries(collection), яка приймає один аргумент (collection).
+// // Усередині функції використовуйте оператор Spread (...) та метод .entries() 
+// // для перетворення вмісту колекції на масив пар [key, value].
+// // return [...collection.entries()];
+// // Викличте цю функцію для обох структур: projectMap та projectSet.
+// // Очікуваний Вивід:
+// // Виклик                   Очікуваний результат (тип)       Очікувані дані
+// // getEntries(projectMap)   Масив пар [ключ, значення]       [ ['id', 1], ['status', 'Active'] ]
+// // getEntries(projectSet)   Масив пар [значення, значення]   [ ['id', 'id'], ['status', 'status'] ]
+
+// function getEntries (collection) {
+//     return [...collection.entries()];
+// }
+
+// console.log(getEntries(projectMap));
+// console.log(getEntries(projectSet));
+
+
+
+// Завдання 33: Підрахунок Унікальних Слів та Сортування за Частотою
+// Вам надано рядок тексту, що містить слова, які повторюються. 
+// Ваше завдання — визначити унікальну кількість кожного слова та відсортувати їх.
+// Заданий рядок:
+// const text = "apple orange banana apple banana orange apple apple orange banana banana";
+// Завдання:
+// Очищення та Підготовка: Розділіть рядок text на масив слів.
+// Підрахунок (Використання Map):Створіть wordCounts (об'єкт Map), щоб зберігати частоту кожного слова: слово -> кількість.
+// Ітерація та Заповнення: Пройдіться циклом по масиву слів і заповніть wordCounts, 
+// збільшуючи лічильник кожного слова, коли воно зустрічається.
+// Сортування: Перетворіть wordCounts назад на масив пар [слово, кількість].
+// Відсортуйте цей масив за кількістю (від найбільшої частоти до найменшої).
+// Очікуваний Вивід (Масив): Масив пар, відсортований за кількістю:[ ['apple', 4], ['orange', 2], ['banana', 2] ]
+
+// const textArr = text.split(' ');
+// const wordCounts = new Map();
+
+// for (word of textArr) {
+//     // debugger;
+// const currentCount = wordCounts.get(word) ?? 0;
+// wordCounts.set(word, currentCount + 1);
+// }
+
+// const wordCountArr = [...wordCounts].sort(function (a, b) {
+//     return b[1] - a[1];
+// });
+// console.log(wordCountArr);
+
+
+// ------------------------------------------------------------------------------------------------------------------------------
