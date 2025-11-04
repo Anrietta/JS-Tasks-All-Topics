@@ -7372,4 +7372,177 @@
 // console.log(unitcircle.diameter);
 
 
+// ----------------------------------------------------------------------------------------------------------------------------
+
+// Завдання 39: Практика call, apply та bind
+// Використовуючи наведені нижче об'єкти та функцію, продемонструйте роботу всіх трьох методів.
+// Задані Об'єкти та Функція:
+
+// const user1 = { firstName: 'Alice', balance: 500 };
+// const user2 = { firstName: 'Bob', balance: 1200 };
+
+// function checkBalance(currency, limit) {
+//     const status = this.balance >= limit ? 'відмінний' : 'низький';
+//     return `${this.firstName}, ваш баланс становить ${this.balance} ${currency}. Статус: ${status}.`;
+// }
+// Завдання:
+// call: Викличте checkBalance у контексті user1. Передайте аргументи: 'USD' та 1000.
+// apply: Викличте checkBalance у контексті user2. Передайте аргументи масивом: ['EUR', 500].
+// bind: Створіть нову функцію getAliceBalance, яка зафіксована на контексті user1 
+// і має попередньо встановлені аргументи: 'JPY' та 400. Викличте цю нову функцію.
+
+
+// console.log(checkBalance.call(user1, 'USD', 1000));
+// console.log(checkBalance.apply(user2, ['EUR', 500]));
+
+// const getAliceBalance = checkBalance.bind(user1, 'JPY', 400);
+// console.log(getAliceBalance());
+
+
+
+
+
+// // Завдання 40: Практичні Сценарії call та apply
+// // Сценарій 1: Запозичення Методу (call)
+// // У вас є два об'єкти. Об'єкт manager не має методу sayHello, але хоче його "запозичити" в об'єкта employee.
+// // Задані структури:
+
+// const employee = {
+//     name: 'Olena',
+//     sayHello(greeting) {
+//         return `${greeting}, ${this.name}! Я - працівник.`;
+//     }
+// };
+
+// const manager = {
+//     name: 'Petro',
+//     department: 'Sales'
+// };
+// // Завдання 1.1: Викличте метод sayHello з об'єкта employee у контексті об'єкта manager, передавши рядок "Добрий день". 
+// // Використовуйте call().
+
+
+// console.log(employee.sayHello.call(manager, 'Добрий день!'));  // Добрий день!, Petro! Я - працівник.
+
+// // Сценарій 2: Обробка Псевдомасивів (apply)
+// // У JavaScript багато об'єктів (наприклад, arguments у звичайній функції або NodeList з DOM)
+// //  виглядають як масиви, але не мають методів масиву, таких як push, pop, або map. Їх називають псевдомасивами.
+// // Задані дані:
+// // // Це псевдомасив (має індекси та властивість length)
+// const pseudoArray = { 0: 10, 1: 20, 2: 30, length: 3 }; 
+
+// // Завдання 2.1: Використовуйте метод Array.prototype.push.apply() для додавання елемента 40 до pseudoArray.
+// // Підказка: Вам потрібно "запозичити" метод push в об'єкта Array.prototype і викликати його в контексті pseudoArray, 
+// // передавши аргументи масивом (або окремими аргументами).
+
+// // Очікуваний результат pseudoArray після виконання:
+
+// // // { 0: 10, 1: 20, 2: 30, 3: 40, length: 4 }
+
+
+// Array.prototype.push.apply(pseudoArray,[40])
+// console.log(pseudoArray);  // {0: 10, 1: 20, 2: 30, 3: 40, length: 4}
+
+
+
+
+
+// Завдання 41: Запозичення Методів Math та Обробка Списків
+// Вам потрібно визначити максимальне та мінімальне значення в об'єкті, 
+// який є псевдомасивом, використовуючи методи Math.max та Math.min. 
+// Ці методи не приймають масив, а приймають аргументи, передані через кому.
+// Завдання:
+// Пошук Максимуму (apply):
+// Використовуйте метод Math.max.
+// Викличте його за допомогою apply(), прив'язавши контекст (this) до null (або undefined), 
+// оскільки Math.max не використовує контекст this.
+// Аргументом має бути масив (або псевдомасив) dataRecord.
+// Збережіть результат у змінну maxScore.
+// Пошук Мінімуму (call + slice):
+// Ускладнення: Спочатку вам потрібно перетворити dataRecord на справжній масив, щоб використати його вміст як
+// список аргументів для Math.min.
+// Запозичте метод Array.prototype.slice для перетворення dataRecord на масив trueArray. Використовуйте call().
+// Потім використайте оператор Spread (...) для передачі елементів trueArray в Math.min.
+// Збережіть результат у змінну minScore.
+// Очікувані Виводи:
+// Максимальний бал: 95
+// Мінімальний бал: 78
+// 
+// Псевдомасив даних
+// const dataRecord = { 
+//     0: 85, 
+//     1: 92, 
+//     2: 78, 
+//     3: 95, 
+//     length: 4 
+// }; 
+// // // Примітка: Math.max(85, 92, 78, 95) працює, але Math.max([85, 92, 78, 95]) — ні.
+
+// const maxScore = Math.max.apply(null, dataRecord);  
+// // прив'язуємо контекст (this) до null (або undefined), оскільки Math.max не використовує контекст this
+// // Використання apply() дозволяє передати псевдомасив (dataRecord) як список аргументів.
+// console.log(maxScore);
+
+
+// const trueArray = Array.prototype.slice.call(dataRecord);  // Паттерн перетворення псевдомасиву на справжній масив.
+// console.log(trueArray);
+// const minScore = Math.min(...trueArray);
+// console.log(minScore);
+
+
+
+
+// Завдання 42: Комбіноване Використання bind та call (Загальний Звіт)
+// Сценарій:
+// Вам потрібно створити гнучку систему звітності. 
+// У вас є загальний метод для друку звіту, але ви хочете створити спеціалізовану функцію звіту, 
+// назавжди прив'язану до конкретного відділу.
+// Завдання:
+// Фіксація Контексту (bind): Створіть нову функцію printMarketingReport.
+// Використовуйте метод bind() для функції printReport.
+// Назавжди зафіксуйте контекст (this) на об'єкті marketing.
+// Виклик та Аргументи (call): Викличте функцію printMarketingReport.
+// Вам потрібно передати аргументи (reporter та date). Для цього викличте її за допомогою call().
+// Використовуйте null як контекст this для call, оскільки контекст вже зафіксовано через bind.
+// Аргументи: 'Anna Kovalska' та '2025-06-01'.
+// Перевірка (Звичайний Виклик): Викличте printMarketingReport без call чи apply, щоб переконатися, що контекст marketing фіксовано назавжди.
+// Очікувані Виводи:
+// Обидва виклики повинні повернути звіт із даними Marketing.
+
+// Задані дані:
+
+// 1. Загальна функція для формування звіту
+// function printReport(reporter, date) {
+//     // this.department та this.budget тут є контекстом, який ми передамо
+//     return `
+//         --- Звіт ${this.department} ---
+//         Дата: ${date}
+//         Бюджет: ${this.budget}
+//         Складено: ${reporter}
+//     `;
+// }
+
+// // 2. Об'єкт-контекст для відділу 'Marketing'
+// const marketing = {
+//     department: 'Marketing',
+//     budget: '50,000 USD'
+// };
+
+// // 3. Об'єкт-контекст для відділу 'IT'
+// const it = {
+//     department: 'IT',
+//     budget: '120,000 USD'
+// };
+
+// const printMarketingReport = printReport.bind(marketing);
+// // встановлений за одпомогою bind контекст this зберігається назавжди!! 
+// // Це означає що ні call ні apply ні пізніше перевизначенй bind не зможуть змінити контекст
+// // всі інші спроби перевизначити контекст будуть ігноруватись!
+// console.log(printMarketingReport.call(null, 'Anna Kovalska', '2025-06-01'));
+// console.log(printMarketingReport('Anna Kovalska', '2025-06-01'));
+
+// const printItReport = printReport.bind(it);
+// console.log(printItReport.call(undefined, 'Valeriy Sychynskiy', '2025-06-02'));
+// console.log((printItReport('Valeriy Sychynskiy', '2025-06-02')));
+
 
