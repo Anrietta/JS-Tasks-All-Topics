@@ -7930,3 +7930,614 @@
 // const processor = new RequestProcessor(consoleLogger);     // 👈 Залежність впроваджена тут!
 // processor.process({id: 42});
 // processor.process({id: 12});
+
+
+
+
+// Завдання 48: Принцип OCP — Розрахунок Зарплати
+// Сценарій: Порушення OCP
+// У вас є клас SalaryCalculator, який розраховує премії для співробітників. 
+// Наразі він підтримує лише два типи: звичайний співробітник (Employee) та менеджер (Manager).
+
+
+// class Employee {
+//     constructor(name, salary) {
+//         this.name = name;
+//         this.salary = salary;
+//     }
+// }
+
+// class Manager extends Employee {
+//     constructor(name, salary) {
+//         super(name, salary);
+//     }
+// }
+
+// class SalaryCalculator {
+//     calculateBonus(employee) {
+//         // ❌ Порушення OCP! Потрібно додавати нові 'if/else' при кожному новому типі
+//         if (employee instanceof Manager) {
+//             // Премія для менеджерів: 15% від зарплати
+//             return employee.salary * 0.15;
+//         } else if (employee instanceof Employee) {
+//             // Премія для звичайних співробітників: 10% від зарплати
+//             return employee.salary * 0.10;
+//         }
+//         return 0;
+//     }
+// }
+// Проблема:
+// Якщо з'явиться новий тип співробітника, наприклад, Executive з премією 25%, 
+// нам доведеться змінити (модифікувати) метод calculateBonus 
+// (додавши else if (employee instanceof Executive)). Це пряме порушення OCP.
+// Завдання: Виправлення за допомогою OCP (Поліморфізм)
+// Переробіть класи, щоб дотримуватися OCP:
+// У базовому класі Employee створіть абстрактний метод (або базовий метод, який викидає помилку) calculateBonus(). 
+// Цей метод стане контрактом.
+// Перенесіть логіку розрахунку премії у відповідні дочірні класи:
+// Employee: реалізує calculateBonus() з логікою 10%.
+// Manager: реалізує calculateBonus() з логікою 15%.
+// Переробіть клас SalaryCalculator так, щоб він більше не містив жодних if/else чи instanceof.
+// Очікуваний Сценарій:
+// Код SalaryCalculator повинен просто викликати метод, покладаючись на поліморфізм.
+
+// // Клас SalaryCalculator має бути закритий для модифікації!
+// class SalaryCalculator {
+//     calculateBonus(employee) {
+//         // 💡 Тут має бути поліморфний виклик, без if/else
+//         return employee.calculateBonus(); 
+//     }
+// }
+
+// // Тестування нового типу (Executive)
+// class Executive extends Employee {
+//     calculateBonus() {
+//         return this.salary * 0.25; // 25% премія
+//     }
+// }
+
+// // 💡 Нам не потрібно змінювати SalaryCalculator, щоб підтримати Executive!
+// const exec = new Executive("Ivan", 5000);
+// const calc = new SalaryCalculator();
+// console.log(calc.calculateBonus(exec)); // Очікується 1250 (5000 * 0.25)
+
+
+// class Employee {
+//     constructor(name, salary) {
+//         this.name = name;
+//         this.salary = salary;
+//     }
+
+//     calculateBonus() {
+//         return this.salary * 0.10;
+//         // throw new Error('Incorrect data.')
+//     }
+// }
+
+// class Manager extends Employee {
+//     constructor(name, salary) {
+//         super(name, salary);
+//     }
+
+//     calculateBonus() {
+//         return this.salary * 0.15;
+//     }
+// }
+
+// class Executive extends Employee {
+//     constructor(name, salary) {
+//         super(name, salary);
+//     }
+//     calculateBonus() {
+//         return this.salary * 0.25;
+//     }
+// }
+
+
+// // Клас-сервіс (Service Object) - надають певні операції при цьому не зберігаючи жодних даних 
+// // пов'язаних з конкретним розрахунком чи співробітником у своїх внутріг=шніх властивостях
+// // Ми створюємо один його екземпляр і цей екземпляр залишається робочим незалежно від того ,
+// // скільки нових типів співобітників ми додамо в майбутньому, оскільки його задача це 
+// // викликати відповідний метод для обєкту екземпляра який переданий йому як аргумент.  
+// class SalaryCalculator {
+//     calculateBonus(employee) {
+//         return employee.calculateBonus();
+//     }
+// }
+
+
+// const executive = new Executive('Ivan', 5000);
+// const calc = new SalaryCalculator();
+// console.log(calc.calculateBonus(executive));  // 1250
+
+// const manager = new Manager('Anna', 8000);
+// console.log(calc.calculateBonus(manager)); // 1200
+
+// const employee = new Employee('Emma', 4300);  // 430
+// console.log(calc.calculateBonus(employee));
+
+
+
+
+
+// Завдання 49: Принцип OCP — Експорт Даних
+// Сценарій: Порушення OCP
+// У вас є клас DataExporter, який відповідає за експорт даних. 
+// Наразі він підтримує експорт лише у два формати: JSON та HTML.
+
+// class DataExporter {
+//     export(data, format) {
+//         // ❌ Порушення OCP! Додавання нового формату вимагає зміни цього методу.
+//         if (format === 'JSON') {
+//             return JSON.stringify(data, null, 2);
+//         } else if (format === 'HTML') {
+//             // Припускаємо, що це простий експорт у список
+//             const listItems = data.map(item => `<li>${item.name}: ${item.value}</li>`).join('');
+//             return `<ul>\n${listItems}\n</ul>`;
+//         } else {
+//             throw new Error(`Unsupported format: ${format}`);
+//         }
+//     }
+// }
+// Проблема:
+// Якщо з'явиться вимога експортувати дані у формат CSV або XML, нам доведеться змінити 
+// (модифікувати) метод export у класі DataExporter, додавши нові else if блоки. Це пряме порушення OCP.
+// Завдання: Виправлення за допомогою OCP (Абстракція та Поліморфізм)
+// Переробіть класи, щоб дотримуватися OCP:
+// Створіть абстрактний базовий клас (або "інтерфейс") DataFormatter з єдиним методом format(data). Це буде ваш контракт.
+// Створіть конкретні класи, які успадковують DataFormatter та реалізують власну логіку форматування:
+// JsonFormatter: реалізує format(data) для JSON.
+// HtmlFormatter: реалізує format(data) для HTML.
+// Переробіть клас DataExporter так, щоб він більше не містив жодних if/else чи перевірок форматів. 
+// Клас DataExporter повинен приймати екземпляр DataFormatter як залежність (DI).
+// Очікуваний Сценарій:
+// Клас DataExporter має бути закритий для модифікації. Якщо потрібно додати CsvFormatter, 
+// ви просто створюєте новий клас, не чіпаючи DataExporter.
+
+// // Дані для експорту
+// const productData = [
+//     { name: 'Laptop', value: 1200 },
+//     { name: 'Mouse', value: 25 }
+// ];
+
+// // 1. Використання JSON
+// const jsonExporter = new DataExporter(new JsonFormatter()); // DI
+// console.log(jsonExporter.export(productData)); 
+
+// // 2. Додавання нового формату (OCP дотримано)
+// // Вам потрібно створити клас CsvFormatter (дочірній клас DataFormatter)
+// // const csvExporter = new DataExporter(new CsvFormatter());
+// // console.log(csvExporter.export(productData));
+
+
+// // клас-абстракція
+// class DataFormatter {
+//     format(data) {
+//         throw new Error('Incorrect data');
+//     }
+// }
+
+// class JsonFormatter extends DataFormatter {
+//     format(data) {
+//         return JSON.stringify(data, null, 2);
+//     }
+// }
+
+// class HtmlFormatter extends DataFormatter {
+//     format(data) {
+//         const listItems = data.map(item => `<li>${item.name}: ${item.value}</li>`).join('');
+//         return `<ul>\n${listItems}\n</ul>`;
+//     }
+// }
+
+// class CsvFormatter extends DataFormatter {
+//     format(data) {
+//         //якийсь код форматування в CSV
+//         console.log(data);
+//     }
+// }
+
+// // DataExporter - це "сервіс високого рівня", який керує експортом.
+// class DataExporter {
+//     // 1. Приймаємо та зберігаємо залежність (DI)
+//     constructor(formatter) {
+//         this.formatter = formatter;
+//     }
+//     // 2. Метод export() приймає ТІЛЬКИ дані, а використовує збережений formatter
+//     export(data) {
+//         return this.formatter.format(data);
+//     }
+// }
+
+// const productData = [
+//     { name: 'Laptop', value: 1200 },
+//     { name: 'Mouse', value: 25 }
+// ];
+
+// // 1. Створюємо експортер і одразу вказуємо, що він буде форматувати в JSON
+// const jsonExporter = new DataExporter(new JsonFormatter());   // тут передаємо конкретний форматер в constructor DataExport
+// // 2. Просто передаємо дані об'єкту, який вже знає, як форматувати
+// console.log(jsonExporter.export(productData));  // тут передаємо обєкт який потрібно форматувати в метод export DataExport
+//                                                 // який передасть обєкт у метод відповідного форматтера
+
+// const csvExporter = new DataExporter(new CsvFormatter());
+// csvExporter.export(productData);
+
+// const htmlExporter = new DataExporter(new HtmlFormatter());
+// console.log(htmlExporter.export(productData));
+
+
+
+
+
+// Завдання 50: Принцип OCP — Доставка Повідомлень
+// Сценарій: Порушення OCP
+// У вас є клас NotificationService, який відповідає за надсилання повідомлень. 
+// Наразі він підтримує лише два канали: Email та SMS.
+
+// class NotificationService {
+//     send(user, message, channel) {
+//         // ❌ Порушення OCP! Потрібно додавати нові 'if/else' при кожному новому каналі
+//         if (channel === 'EMAIL') {
+//             this.sendEmail(user.email, message);
+//         } else if (channel === 'SMS') {
+//             this.sendSms(user.phone, message);
+//         } else {
+//             throw new Error(`Unsupported channel: ${channel}`);
+//         }
+//     }
+
+//     sendEmail(address, msg) {
+//         console.log(`[EMAIL] Sending to ${address}: "${msg}"`);
+//     }
+
+//     sendSms(phone, msg) {
+//         console.log(`[SMS] Sending to ${phone}: "${msg}"`);
+//     }
+// }
+// Проблема:
+// Якщо з'явиться новий канал, наприклад, Telegram або Viber, нам доведеться змінити
+//  (модифікувати) метод send у класі NotificationService, додавши новий else if блок 
+//  та новий приватний метод sendTelegram. Це пряме порушення OCP.
+
+// Завдання: Виправлення за допомогою OCP (Композиція)
+// Переробіть класи, щоб дотримуватися OCP:
+// Створіть абстрактний базовий клас (або "інтерфейс") MessageChannel з єдиним методом sendMessage(user, message). Це ваш контракт.
+// Створіть конкретні класи, які успадковують MessageChannel та реалізують власну логіку надсилання:
+// EmailChannel: реалізує sendMessage() для Email.
+// SmsChannel: реалізує sendMessage() для SMS.
+// Переробіть клас NotificationService так, щоб він більше не містив жодних if/else чи перевірок каналів. 
+// Клас NotificationService повинен приймати екземпляр MessageChannel як залежність (DI).
+// Очікуваний Сценарій:
+// Клас NotificationService має бути закритий для модифікації. Якщо потрібно додати TelegramChannel,
+// ви просто створюєте новий клас-канал, не чіпаючи NotificationService.
+
+
+// Дані користувача
+// const userData = { email: 'user@test.ua', phone: '097XXXXXXX', Viber: '097XXXXXXX' };
+// const msg = 'Your order is confirmed.';
+
+// // // 1. Створення Email-сервісу (DI)
+// // const emailService = new NotificationService(new EmailChannel());
+// // emailService.send(userData, msg);
+// // // Очікуваний вивід: [EMAIL] Sending to user@test.ua: "Your order is confirmed."
+
+// // // 2. Створення SMS-сервісу (DI)
+// // const smsService = new NotificationService(new SmsChannel());
+// // smsService.send(userData, msg);
+// // // Очікуваний вивід: [SMS] Sending to 097XXXXXXX: "Your order is confirmed."
+
+
+// // клас-сервіс
+// class NotificationService {
+//     constructor(channel) {    // Dependency injection
+//         this.channel = channel;
+//     }
+//     send(user, message) {
+//         return this.channel.sendMessage(user, message);
+//     }
+
+// }
+
+
+// // клас абстракція (інтерфес/контракт)
+// class MessageChanel {
+//     sendMessage(user, message) {
+//         throw new Error(`Method sendMessage() must be implemented by subclasses.`)
+//     }
+// }
+
+// class EmailChannel extends MessageChanel {
+//     sendMessage(user, msg) {
+//         console.log(`[EMAIL] Sending to ${user.email}: "${msg}"`);
+//     }
+// }
+
+// class SmsChannel extends MessageChanel {
+//     sendMessage(user, msg) {
+//         console.log(`[SMS] Sending to ${user.phone}: "${msg}"`);
+//     }
+// }
+
+// class ViberChannel extends MessageChanel {
+//     sendMessage(user, msg) {
+//         console.log(`[Viber] Sending to ${user.phone}: "${msg}"`);
+//     }
+// }
+
+// const emailService = new NotificationService(new EmailChannel());  // Dependency injection
+// emailService.send(userData, msg); // передаю дані у метод send NotificationService який виконає метод sendMessage екземплряра EmailChannel
+
+
+// const smsService = new NotificationService(new SmsChannel()); // DI
+// smsService.send(userData, msg);
+
+// const viberService = new NotificationService(new ViberChannel()); // DI
+// viberService.send(userData, msg);
+
+
+
+
+
+// Завдання 51: Принцип OCP — Валідація Користувача
+// Сценарій: Порушення OCP
+// У вас є клас UserValidator, який перевіряє користувача за кількома правилами. 
+// Наразі він підтримує лише дві перевірки: наявність імені та перевірка віку (має бути 18+).
+
+// class User {
+//     constructor(name, age, email) {
+//         this.name = name;
+//         this.age = age;
+//         this.email = email;
+//     }
+// }
+
+// class UserValidator {
+//     validate(user) {
+//         // ❌ Порушення OCP! Потрібно додавати нові 'if/else' для кожного нового правила
+//         if (!user.name) {
+//             return { isValid: false, message: 'Name is required.' };
+//         }
+        
+//         if (user.age < 18) {
+//             return { isValid: false, message: 'User must be at least 18 years old.' };
+//         }
+        
+//         // ... тут можуть бути десятки інших if/else перевірок
+        
+//         return { isValid: true, message: 'User is valid.' };
+//     }
+// }
+// Проблема:
+// Якщо з'явиться нове правило, наприклад, перевірка формату Email або унікальність імені, 
+// нам доведеться змінити (модифікувати) метод validate у класі UserValidator, додавши новий if блок. Це пряме порушення OCP.
+
+// Завдання: Виправлення за допомогою OCP (Композиція та Список Правил)
+// Переробіть класи, щоб дотримуватися OCP:
+// Створіть абстрактний базовий клас (або "інтерфейс") ValidationRule з єдиним методом validate(user). Цей метод повинен повертати об'єкт { isValid: boolean, message: string }. Це ваш контракт.
+// Створіть конкретні класи правил, які успадковують ValidationRule та реалізують власну логіку:
+// NameRequiredRule: перевіряє наявність імені.
+// AgeMinRule: перевіряє вік (18+).
+// Переробіть клас UserValidator так, щоб він більше не містив жодних if блоків з логікою перевірки. Клас UserValidator повинен:
+// Приймати масив об'єктів ValidationRule як залежність у конструкторі (DI).
+// У методі validate(user) ітерувати по масиву правил і виконувати їх послідовно, повертаючи помилку одразу, як тільки вона виникла.
+// Очікуваний Сценарій:
+// Клас UserValidator має бути закритий для модифікації. Якщо потрібно додати EmailFormatRule, ви просто створюєте новий клас-правило та додаєте його до масиву залежностей.
+
+// // 1. Створення нових правил (відкрито для розширення)
+// // Створіть новий клас EmailFormatRule extends ValidationRule
+
+// // 2. Складання валідатора
+// const rules = [
+//     new NameRequiredRule(),
+//     new AgeMinRule(18),
+//     // new EmailFormatRule() // Можна додати без зміни UserValidator
+// ];
+
+// // 3. Створення валідатора з DI
+// const validator = new UserValidator(rules);
+// const invalidUser = new User('', 17, '');
+
+// // 4. Валідація
+// console.log(validator.validate(invalidUser)); 
+// // Очікується: { isValid: false, message: 'Name is required.' }
+// // Або: { isValid: false, message: 'User must be at least 18 years old.' }
+
+
+
+
+// class User {
+//     constructor(name, age, email) {
+//         this.name = name;
+//         this.age = age;
+//         this.email = email;
+//     }
+// }
+
+// // клас абстракція (інтерфес, контракт) або базовий клас
+// class ValidationRule {
+//     validate(user) {
+//         return {isValid: boolean, message: string};
+//     }
+// }
+
+// class NameRequiredRule extends ValidationRule{
+//     validate(user) {
+//         if (!user.name) {
+//             return { isValid: false, message: 'Name is required.' };
+//         }
+//         return null;
+//     }
+// }
+
+// class AgeMinRule extends ValidationRule {
+//     validate(user) {
+//         if (user.age < 18) {
+//             return { isValid: false, message: 'User must be at least 18 years old.' };
+//         }
+//         return null;
+//     }
+// }
+
+// class EmailFormatRule extends ValidationRule {
+//     validate(user) {
+//         if (!user.email.includes('@')) {
+//             return { isValid: false, message: 'Email must conform to the sample.' };
+//         }
+//         return null;
+//     }
+// }
+
+
+// // клас сервіс
+// class UserValidator {
+//     constructor(rulesArr) {
+//         this.rules = rulesArr;
+//     }
+//     validate(user) {
+//         // debugger;
+//         for (let rule of this.rules) {
+//             const validationResult = rule.validate(user);
+
+//             if (validationResult) {
+//                 // Якщо знайдена перша помилка: негайно повертаємо її і зупиняємо цикл
+//                 return validationResult;
+
+//             }
+//         }
+//         // 💡 Якщо цикл завершився без повернення (усі правила пройдені)
+//         return { isValid: true, message: 'User is valid.' };
+
+
+//     }
+// }
+
+
+// const rules = [
+//     new NameRequiredRule(),
+//     new AgeMinRule(),
+//     new EmailFormatRule() // Можна додати без зміни UserValidator
+// ];
+
+// const validator = new UserValidator(rules);  // створили обєкт сервіса
+
+// const validUser = new User('Olga', 25, 'olga@mail.com');  // створили обєкт юзера
+// const invalidUser = new User('', 17, 'olga@mail.com');  // створили обєкт юзера
+// const invalidUser2 = new User('Vasya', 2, 'vasmail.com');  // створили обєкт юзера
+// const invalidUser3 = new User('Petro', 28, 'petromail.com');  // створили обєкт юзера
+
+// console.log(validator.validate(validUser));
+// console.log(validator.validate(invalidUser));
+// console.log(validator.validate(invalidUser2));
+// console.log(validator.validate(invalidUser3));
+
+
+
+
+// Завдання 52: Принцип OCP — Розрахунок Знижок
+// Сценарій: Порушення OCP
+// У вас є клас DiscountCalculator, який застосовує знижки до вартості замовлення. 
+// Зараз він підтримує лише два типи знижок: Фіксована сума та Відсоткова знижка.
+
+// class DiscountCalculator {
+//     calculate(orderAmount, type, value) {
+//         // ❌ Порушення OCP! Додавання нового типу знижки вимагає зміни цього методу.
+//         if (type === 'FIXED') {
+//             // value - це фіксована сума
+//             return orderAmount - value;
+//         } else if (type === 'PERCENT') {
+//             // value - це відсоток (наприклад, 0.1 для 10%)
+//             return orderAmount - (orderAmount * value);
+//         } else {
+//             return orderAmount; // Немає знижки
+//         }
+//     }
+// }
+// Проблема:
+// Якщо з'явиться новий тип знижки, наприклад, "Порогова знижка" (THRESHOLD) 
+// (знижка $50, якщо сума > $1000), нам доведеться змінити (модифікувати) 
+// метод calculate у класі DiscountCalculator, додавши новий else if блок. Це пряме порушення OCP.
+
+// Завдання: Виправлення за допомогою OCP (Поліморфізм)
+// Переробіть класи, щоб дотримуватися OCP:
+// Створіть абстрактний базовий клас (або "інтерфейс") DiscountRule з єдиним методом apply(orderAmount). Це буде ваш контракт.
+// Створіть конкретні класи правил, які успадковують DiscountRule та реалізують власну логіку:
+// FixedDiscount: приймає фіксовану суму у конструкторі та реалізує її в apply().
+// PercentDiscount: приймає відсоток у конструкторі та реалізує його в apply().
+// Переробіть клас DiscountCalculator так, щоб він більше не містив жодних if/else чи перевірок типів. 
+// Клас DiscountCalculator повинен приймати екземпляр DiscountRule як залежність (DI).
+// Очікуваний Сценарій:
+// Клас DiscountCalculator має бути закритий для модифікації. Якщо потрібно додати нове правило,
+//  ви просто створюєте новий клас-правило та передаєте його в калькулятор.
+
+// // Дані
+// const order = 200; // Сума замовлення
+
+// // 1. Створення знижок
+// const fixedRule = new FixedDiscount(50); // Фіксована знижка $50
+// const percentRule = new PercentDiscount(0.15); // 15% знижка
+
+// // 2. Створення калькуляторів
+// const fixedCalculator = new DiscountCalculator(fixedRule); // DI
+// const percentCalculator = new DiscountCalculator(percentRule); // DI
+
+// // 3. Розрахунок
+// console.log(fixedCalculator.calculate(order)); // Очікується 150 (200 - 50)
+// console.log(percentCalculator.calculate(order)); // Очікується 170 (200 - 30)
+
+// базовий клас(інтерфес)
+// class DiscountRlue {
+//     apply(orderAmount) {
+//         throw new Error('Unknown rule')
+//     }
+// }
+
+// class FixedDiscount extends DiscountRlue {
+//     constructor(fixedValue) {
+//         // потрібно викликати супер щоб надати контекст this, навіть якщо батьківський/базовий клас не містить конструктора!
+//         // так JS неявно надає this правильного контексту в дочірніх класах
+//         super();   
+//         this.fixedValue = fixedValue;
+//     }
+
+//     apply(orderAmount) {
+//         return orderAmount - this.fixedValue;
+//     }
+// }
+
+// class PercentDiscount extends DiscountRlue {
+//     constructor(percentageValue) {
+//         // потрібно викликати супер щоб надати контекст this, навіть якщо батьківський/базовий клас не містить конструктора!
+//         // так JS неявно надає this правильного контексту в дочірніх класах
+//         super();   
+//         this.percentageValue = percentageValue;
+//     }
+
+//     apply(orderAmount) {
+//         return orderAmount - (orderAmount * this.percentageValue);
+//     }
+// }
+
+
+// // клас-сервіс (модуль високого рівня)
+// class DiscountCalculator {
+//     constructor(discountRule) {
+//         this.discountRule = discountRule;   // впроваджуємо залежність, через аргумент (DI)
+//     }
+//     calculate(orderAmount) {
+
+//         return this.discountRule.apply(orderAmount); 
+//     }
+// }
+
+
+// const order = 200; // Сума замовлення
+
+// const fixedRule = new FixedDiscount(50);   // створюємо конкретну деталь - реалізацію, яка буде передаватись в DiscountCalculator для DI
+// const percentRule = new PercentDiscount(0.15);
+
+// const fixedCalculator = new DiscountCalculator(fixedRule);  // DI - встановлюємо залежність (percentRule збережеться в конструкторі DiscountCalculator)
+// const percentCalculator = new DiscountCalculator(percentRule); // DI - встановлюємо залежність (percentRule збережеться в конструкторі DiscountCalculator)
+
+// console.log(fixedCalculator.calculate(order));   // 150
+// console.log(percentCalculator.calculate(order));   // 170
