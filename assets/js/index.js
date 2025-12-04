@@ -10173,3 +10173,321 @@
 // console.log(accSys.runAudit(112233));
 // console.log(accSys.initiateRefund(112233));
 // console.log(accSys.processPayment(150, 'vvvvvvavaa'));  //accSys.processPayment is not a function
+
+
+
+
+
+// Завдання 64: Принцип D (Інверсія Залежностей) — Сповіщення
+// Сценарій: Порушення DIP
+// Уявіть, що клас високого рівня UserService (який містить бізнес-логіку) напряму залежить від конкретного класу низького рівня EmailSender.
+
+// // Модуль низького рівня (Деталі: як надсилати email)
+// class EmailSender {
+//     send(user, message) {
+//         console.log(`Sending email to ${user.email}: ${message}`);
+//     }
+// }
+
+// // Модуль високого рівня (Бізнес-логіка: коли надсилати)
+// class UserService {
+//     constructor() {
+//         // ❌ Порушення DIP! UserService напряму створює і залежить від КОНКРЕТНОЇ реалізації.
+//         this.notifier = new EmailSender(); 
+//     }
+
+//     registerUser(user) {
+//         console.log(`User ${user.name} registered.`);
+        
+//         // Виклик конкретного методу EmailSender
+//         this.notifier.send(user, "Welcome to our service!");
+//     }
+// }
+// Проблема:
+// Жорстка Зв'язаність: Якщо ми захочемо використовувати SMSSender або PushNotificationSender, нам доведеться змінити код у UserService.
+// Неможливість Тестування: Під час тестування UserService (тест на реєстрацію користувача) ми завжди будемо реально надсилати електронний лист, що є небажаним.
+// Завдання: Виправлення за допомогою DIP (Інверсія Залежностей)
+// Виправте архітектуру, щоб UserService залежав від абстракції, а не від конкретного класу.
+// Створіть абстрактний інтерфейс Notifier (контракт), який містить метод notify(user, message).
+// Клас EmailSender повинен реалізувати цей інтерфейс.
+// Клас UserService повинен приймати залежність (конкретний об'єкт, який реалізує Notifier) через конструктор (Dependency Injection).
+// Очікуваний Сценарій:
+// Клієнтський код (який створює об'єкти) тепер має контролювати, який саме сповіщувач використовувати.
+
+// const emailNotifier = new EmailSender(); // Конкретна реалізація
+// const userService = new UserService(emailNotifier); // Передача абстракції
+
+// userService.registerUser({ name: 'Alice', email: 'alice@example.com' }); 
+// // Тепер, якщо ми створимо PushSender, ми просто передамо його, не змінюючи UserService.
+
+
+// // Абстрактний інтерфейс
+// class Notifier {
+//     // в абстрактному класі Notifier метод notify є точкою інверсії - тепер усі модулі покладаються на цей контракт
+//     notify(user, message) {
+//         throw new Error ('Must implement notify!')
+//     }
+// }
+
+// // Модуль низького рівня (Деталі: як надсилати email)  - залежить від Notifier, а не навпаки
+// class EmailSender extends Notifier{
+//     notify(user, message) {
+//         console.log(`Sending email to ${user.email}: ${message}`);
+//     }
+// }
+
+// // Модуль низького рівня (Деталі: як відправити sms)  - залежить від Notifier, а не навпаки
+// class SmsSender extends Notifier {
+//     notify(user, message) {
+//         console.log(`Sending sms to ${user.phone}: ${message}`);
+//     }
+// }
+
+// // Модуль високого рівня (Бізнес-логіка: що робити? коли надсилати)
+// class UserService {
+//     constructor(notifierType) {
+//         // UserService залежить від абстракції (Notifier), а не від конкретного класу (EmailSender або SmsSender). Це повна інверсія залежностей.
+//         this.notifierType = notifierType;   // DI - залежність від обєкту який передали в конструктор
+//     }
+
+//     registerUser(user) {
+//         console.log(`User ${user.name} registered.`);
+        
+//         // Виклик методу notify в будь-якому notifier в залежності від переданого обєкту в конструктор
+//         this.notifierType.notify(user, "Welcome to our service!");
+//     }
+// }
+
+
+// const userA = { name: 'Alice', email: 'alice@example.com', phone: 380501234589};
+// const userB = { name: 'John', email: 'john@example.com', phone: 380509876543};
+
+// const emailNotifier = new EmailSender();  // Конкретна реалізація
+// const userEmailService = new UserService(emailNotifier);  // передача абстракції
+
+// console.log(userEmailService.registerUser(userA));  // Sending email to alice@example.com: Welcome to our service!
+
+// const smsNotifier = new SmsSender();  // конкретна реалізація
+// const userSmsService = new UserService(smsNotifier); // передача абстракції
+
+// console.log(userSmsService.registerUser(userB));  // Sending sms to 380509876543: Welcome to our service!
+
+
+
+
+
+// Завдання 65: Принцип D (Інверсія Залежностей) — Зберігання Даних
+// Сценарій: Порушення DIP
+// Уявіть, що у нас є клас високого рівня UserProcessor, який відповідає за обробку даних. 
+// Він напряму залежить від конкретного класу низького рівня FileStorage для зберігання.
+
+// // Модуль низького рівня (Деталі: як зберігати у файл)
+// class FileStorage {
+//     save(data) {
+//         console.log(`[FileSystem] Saving data to disk: ${data}`);
+//         return true;
+//     }
+//     load() {
+//         console.log(`[FileSystem] Loading data from disk.`);
+//         return { user: "Test User", id: 1 };
+//     }
+// }
+
+// // Модуль високого рівня (Бізнес-логіка: обробка користувача)
+// class UserProcessor {
+//     constructor() {
+//         // ❌ Порушення DIP! UserProcessor напряму створює і залежить від КОНКРЕТНОЇ реалізації.
+//         this.storage = new FileStorage(); 
+//     }
+
+//     processUserData(data) {
+//         // 1. Зберігання
+//         this.storage.save(data);
+        
+//         // 2. Додаткова бізнес-логіка
+//         console.log(`Processing complete for data: ${data}`);
+//     }
+
+//     getUserData() {
+//         return this.storage.load();
+//     }
+// }
+// Проблема:
+// Жорстка Зв'язаність: Якщо бізнес-вимоги зміняться, і нам знадобиться зберігати дані в DatabaseStorage 
+// (наприклад, SQL чи NoSQL), нам доведеться змінювати код у UserProcessor.
+// Проблеми Тестування: Тестування UserProcessor вимагатиме реального читання/запису у файл, що повільно і ненадійно.
+// Завдання: Виправлення за допомогою DIP (Інверсія Залежностей)
+// Виправте архітектуру, щоб UserProcessor залежав від абстракції (контракту), а не від конкретного класу.
+// Створіть абстрактний інтерфейс DataStorage, який містить методи save(data) та load().
+// Клас FileStorage повинен реалізувати цей інтерфейс.
+// Створіть новий клас DatabaseStorage, який також реалізує DataStorage.
+// Клас UserProcessor повинен приймати залежність (конкретний об'єкт, який реалізує DataStorage) через конструктор (Dependency Injection).
+// Очікуваний Сценарій:
+// Ми можемо легко перемикатися між зберіганням у файлі та базою даних, не торкаючись бізнес-логіки в UserProcessor.
+
+
+// // Абстракція
+// class DataStorage {
+//         save(data) {
+//         throw new Error('Must implement save!')
+//     }
+//     load() {
+//         throw new Error('Must implement load!')
+//     }
+// }
+
+// // Модуль низького рівня (Деталі: як зберігати у файл)
+// class FileStorage extends DataStorage{
+//     save(data) {
+//         console.log(`[FileSystem] Saving data to disk: ${data}`);
+//         return true;
+//     }
+//     load() {
+//         console.log(`[FileSystem] Loading data from disk.`);
+//         return { user: "Test User", id: 1 };
+//     }
+// }
+
+// // Модуль низького рівня (Деталі: як зберігати у DB)
+// class DBStorage extends DataStorage{
+//     save(data) {
+//         console.log(`[DBSystem] Saving data to Datebase: ${data}`);
+//         return true;
+//     }
+//     load() {
+//         console.log(`[DBSystem] Loading data from Database.`);
+//         return { user: "Test User", id: 1 };
+//     }
+// }
+
+
+// // Модуль високого рівня (Бізнес-логіка: обробка користувача)
+// class UserProcessor {
+//     // DI - впровадження залежності від абстракції, тобто від обєкту який буде передано в конструктор
+//     // Це дозволяє клієнтському коду (зовнішньому коду) вирішувати, який саме механізм зберігання використовувати:
+//     constructor(storage) {     // <-- Залежність впроваджується сюди
+//         this.storage = storage;  
+//     }
+
+//     processUserData(data) {
+//         // 1. Зберігання
+//         this.storage.save(data);
+        
+//         // 2. Додаткова бізнес-логіка
+//         console.log(`Processing complete for data: ${data}`);
+//     }
+
+//     getUserData() {
+//         return this.storage.load();
+//     }
+// }
+
+
+// const data1 = 'aabbcc';
+// const data2 = 'ffggrr';
+
+// const fileStorage = new FileStorage(); // конкретна реалізація
+// const fileStorageProcess = new UserProcessor(fileStorage); // DI - abstraction
+
+// console.log(fileStorageProcess.getUserData());  // {user: 'Test User', id: 1}  [FileSystem] Loading data from disk.
+// console.log(fileStorageProcess.processUserData(data1));  // Processing complete for data: aabbcc
+
+// const dbStorage = new DBStorage(); // Конкретна реалізація
+// const dbStorageProcess = new UserProcessor(dbStorage) // DI - abstraction
+
+// console.log(dbStorageProcess.getUserData());  // {user: 'Test User', id: 1}  [DBSystem] Loading data from Database.
+// console.log(dbStorageProcess.processUserData(data2));  // Processing complete for data: ffggrr
+
+
+
+
+// Завдання 66: Принцип D (Інверсія Залежностей) — UI Кнопка
+// Сценарій: Порушення DIP
+// Уявіть клас високого рівня Button (який представляє елемент інтерфейсу). 
+// Його єдина робота — знати, коли на нього натиснули. 
+// Він напряму залежить від конкретного класу низького рівня SaveCommand, який знає, як зберігати файл.
+
+
+// // Модуль низького рівня (Деталі: як зберегти)
+// class SaveCommand {
+//     execute() {
+//         console.log("Saving document to file...");
+//         // Тут багато логіки, специфічної для збереження
+//     }
+// }
+
+// // Модуль високого рівня (UI-логіка: обробка натискання)
+// class Button {
+//     constructor() {
+//         // ❌ Порушення DIP! Button напряму залежить від КОНКРЕТНОЇ команди.
+//         this.command = new SaveCommand(); 
+//     }
+
+//     click() {
+//         console.log("Button was clicked.");
+//         // Виклик конкретного методу
+//         this.command.execute(); 
+//     }
+// }
+// Проблема:
+// Жорстка Зв'язаність: Ця кнопка завжди виконує лише функцію збереження. 
+// Щоб створити кнопку "Скасувати" або "Надіслати", 
+// нам доведеться створювати новий клас CancelButton або SendButton та дублювати логіку click().
+// Відсутність Гнучкості: Ми не можемо передати кнопку "Зберегти" в іншу частину UI, щоб вона виконала іншу команду, не змінюючи її код.
+// Завдання: Виправлення за допомогою DIP (Інверсія Залежностей)
+// Ми повинні інвертувати залежність, щоб кнопка залежала від абстрактного поняття "Команда".
+// Створіть абстрактний інтерфейс Command (контракт), який містить метод execute().
+// Клас SaveCommand повинен реалізувати цей інтерфейс.
+// Створіть новий клас PrintCommand, який також реалізує Command.
+// Клас Button повинен приймати залежність (конкретний об'єкт, який реалізує Command) через конструктор (Dependency Injection).
+// Очікуваний Сценарій:
+// Клас Button стає модулем високого рівня, який не знає, що саме він виконує. Він знає лише, що він повинен викликати execute() на об'єкті, який йому дали.
+
+
+// // абстракція
+// class Command {
+//     execute() {
+//         throw new Error('Must implement execute!')
+//     }
+// }
+
+
+// // Модуль низького рівня (Деталі: як зберегти)
+// class SaveCommand extends Command {
+//     execute() {
+//         console.log("Saving document to file...");
+//         // Тут багато логіки, специфічної для збереження
+//     }
+// }
+
+// // Модуль низького рівня (Деталі: як зкопіювати чи відправити на друк)
+// class PrintCommand extends Command {
+//     execute() {
+//          console.log("Printing document ...");
+//         // Тут багато логіки, специфічної для копіювання чи відправки нан друк
+//     }
+// }
+
+// // Модуль високого рівня (UI-логіка: обробка натискання)
+// class Button {
+//     constructor(command) {   // DI - залежність від абстракції
+//         this.command = command; 
+//     }
+
+//     click() {
+//         console.log("Button was clicked.");
+//         // Виклик конкретного методу
+//         this.command.execute(); 
+//     }
+// }
+
+
+// const saveCom = new SaveCommand();  // конкретна реалізація
+// const saveComExecution = new Button(saveCom); // DI - залежність від абстракції - дозволяє за межами коду(класу) змінювати сценарій
+
+// console.log(saveComExecution.click());   // Button was clicked.   Saving document to file...
+
+// const printCom = new PrintCommand();   // конкретна реалізація
+// const printComExecution = new Button(printCom);   // DI - залежність від абстракції - дозволяє за межами коду(класу) змінювати сценарій
+
+// console.log(printComExecution.click());  // Button was clicked.     Printing document ...
